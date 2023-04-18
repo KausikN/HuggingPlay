@@ -1,0 +1,6 @@
+__pycache__/
+
+# Models
+Data/_models/
+# Datasets
+Data/_datasets/
