@@ -47,13 +47,17 @@ def HF_Func_LoadModel(model_info):
     '''
     # Init
     HF_ID = model_info["hf_id"]
+    HF_PARAMS = {} if "params" not in model_info["data"] else model_info["data"]["params"]
     MODEL_DATA = {
         "hf_id": HF_ID,
         "hf_data": model_info["data"],
         "pipe": None,
     }
     # Load Model
-    MODEL_DATA["pipe"] = DiffusionPipeline.from_pretrained(HF_ID)
+    PIPE = DiffusionPipeline.from_pretrained(HF_ID, **HF_PARAMS)
+    PIPE.scheduler = DPMSolverMultistepScheduler.from_config(PIPE.scheduler.config)
+    PIPE.enable_model_cpu_offload()
+    MODEL_DATA["pipe"] = PIPE
     
     return MODEL_DATA
 
@@ -67,8 +71,7 @@ def HF_Func_RunModel(MODEL_DATA, inputs):
         "video_frames": None
     }
     # Run Model
-    PIPE.scheduler = DPMSolverMultistepScheduler.from_config(PIPE.scheduler.config)
-    PIPE.enable_model_cpu_offload()
+    
     OUTPUTS["video_frames"] = PIPE(inputs["prompt"], inputs["n_frames"]).frames
 
     return OUTPUTS
