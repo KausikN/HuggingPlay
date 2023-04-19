@@ -40,5 +40,6 @@ def name_to_path(name, lower=False):
 UTILS_PATHS = {
     "temp": "Data/_temp/"
 }
+os.makedirs(UTILS_PATHS["temp"], exist_ok=True)
 
 # Main Functions
