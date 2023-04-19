@@ -1,0 +1,192 @@
+{
+    "name": "HuggingPlay",
+    "repoLink": "https://github.com/KausikN/HuggingPlay",
+    "localPath": "E:/Github Codes and Projects/Projects/HuggingPlay",
+    "modules": {
+        "app.py": {
+            "name": "app",
+            "type": "local",
+            "link": "https://github.com/KausikN/HuggingPlay/blob/master/app.py",
+            "parentDir": "E:/Github Codes and Projects/Projects/HuggingPlay",
+            "subDir": "",
+            "dependencies": [
+                "os.py",
+                "json.py",
+                "streamlit.py",
+                "*.py"
+            ]
+        },
+        "HuggingPlay.py": {
+            "name": "HuggingPlay",
+            "type": "local",
+            "link": "https://github.com/KausikN/HuggingPlay/blob/master/HuggingPlay.py",
+            "parentDir": "E:/Github Codes and Projects/Projects/HuggingPlay",
+            "subDir": "",
+            "dependencies": [
+                "*.py",
+                "HF_Multimodal_Text_to_Video.py"
+            ]
+        },
+        "HFLibraries/Multimodal/HF_Multimodal_Text_to_Video.py": {
+            "name": "HF_Multimodal_Text_to_Video",
+            "type": "local",
+            "link": "https://github.com/KausikN/HuggingPlay/blob/master/HFLibraries/Multimodal/HF_Multimodal_Text_to_Video.py",
+            "parentDir": "E:/Github Codes and Projects/Projects/HuggingPlay",
+            "subDir": "HFLibraries/Multimodal",
+            "dependencies": [
+                "torch.py",
+                "*.py",
+                "DiffusionPipeline.py",
+                "DPMSolverMultistepScheduler.py",
+                "export_to_video.py"
+            ]
+        },
+        "Utils/Utils.py": {
+            "name": "Utils",
+            "type": "local",
+            "link": "https://github.com/KausikN/HuggingPlay/blob/master/Utils/Utils.py",
+            "parentDir": "E:/Github Codes and Projects/Projects/HuggingPlay",
+            "subDir": "Utils",
+            "dependencies": [
+                "os.py",
+                "json.py",
+                "pickle.py",
+                "functools.py",
+                "numpy.py",
+                "streamlit.py",
+                "pipeline.py",
+                "AutoConfig.py",
+                "AutoTokenizer.py",
+                "file_utils.py"
+            ]
+        },
+        "torch.py": {
+            "name": "torch",
+            "type": "inbuilt",
+            "link": "",
+            "parentDir": "E:/Github Codes and Projects/Projects/HuggingPlay",
+            "subDir": "",
+            "dependencies": []
+        },
+        "numpy.py": {
+            "name": "numpy",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "streamlit.py": {
+            "name": "streamlit",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "json.py": {
+            "name": "json",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "AutoTokenizer.py": {
+            "name": "AutoTokenizer",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "pickle.py": {
+            "name": "pickle",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "AutoConfig.py": {
+            "name": "AutoConfig",
+            "type": "inbuilt",
+            "link": "",
+            "parentDir": "E:/Github Codes and Projects/Projects/HuggingPlay",
+            "subDir": "",
+            "dependencies": []
+        },
+        "file_utils.py": {
+            "name": "file_utils",
+            "type": "inbuilt",
+            "link": "",
+            "parentDir": "E:/Github Codes and Projects/Projects/HuggingPlay",
+            "subDir": "",
+            "dependencies": []
+        },
+        "DPMSolverMultistepScheduler.py": {
+            "name": "DPMSolverMultistepScheduler",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "pipeline.py": {
+            "name": "pipeline",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "os.py": {
+            "name": "os",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "DiffusionPipeline.py": {
+            "name": "DiffusionPipeline",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "export_to_video.py": {
+            "name": "export_to_video",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "HF_Multimodal_Text_to_Video.py": {
+            "name": "HF_Multimodal_Text_to_Video",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "functools.py": {
+            "name": "functools",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "*.py": {
+            "name": "*",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        }
+    }
+}

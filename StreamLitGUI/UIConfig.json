@@ -1,0 +1,10 @@
+{
+    "PROJECT_NAME": "HuggingPlay",
+    "PROJECT_LINK": "https://github.com/KausikN/HuggingPlay",
+
+    "PROJECT_DESC": "A python tool to run and visualize Hugging-Face models on various tasks",
+
+    "PROJECT_README": "README.md",
+
+    "PROJECT_MODES": ["Run Models"]
+}

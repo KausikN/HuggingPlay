@@ -1,6 +1,10 @@
 __pycache__/
 
+# HuggingFace
+Data/_hf/
 # Models
 Data/_models/
 # Datasets
 Data/_datasets/
+# Temp
+Data/_temp/

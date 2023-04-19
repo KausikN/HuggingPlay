@@ -1,0 +1,10 @@
+{
+    "repo_name": "HuggingPlay",
+    "requirements": [
+        "streamlit",
+        "opencv-python-headless",
+        "transformers",
+        "datasets",
+        "diffusers"
+    ]
+}
