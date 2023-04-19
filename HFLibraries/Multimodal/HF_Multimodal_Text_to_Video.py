@@ -72,7 +72,7 @@ def HF_Func_RunModel(MODEL_DATA, inputs):
     }
     # Run Model
     
-    OUTPUTS["video_frames"] = PIPE(inputs["prompt"], inputs["n_frames"]).frames
+    OUTPUTS["video_frames"] = PIPE(**inputs).frames
 
     return OUTPUTS
 

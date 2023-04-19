@@ -134,7 +134,7 @@ def run_models():
     ## Load Model
     MODEL_DATA = MODULE.HF_FUNCS["load_model"](USERINPUT_ModelInfo)
     ## Run Model using Inputs
-    OUTPUTS = MODULE.HF_FUNCS["run_model"](MODEL_DATA, USERINPUT_Inputs)
+    OUTPUTS = MODULE.HF_FUNCS["run_model"](MODEL_DATA, USERINPUT_Inputs["inputs"])
 
     # Display Outputs
     st.markdown("## Outputs")
