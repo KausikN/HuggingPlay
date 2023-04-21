@@ -2,6 +2,10 @@
     "task_type": "Multimodal",
     "task": "Text-to-Video",
     "models": {
-        
+        "damo-vilab/text-to-video-ms-1.7b": {
+            "params": {
+                "variant": "fp16"
+            }
+        }
     }
 }

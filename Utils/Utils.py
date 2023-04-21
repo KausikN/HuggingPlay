@@ -26,7 +26,7 @@ print("HF Cache Path (Default):", file_utils.default_cache_path)
 print("HF Cache Path (Set):", HF_CACHE_PATH)
 
 # Utils Functions
-def name_to_path(name, lower=False):
+def name_to_path(name, lower=True):
     # Convert to Lowercase
     if lower: name = name.lower()
     # Remove Special Chars

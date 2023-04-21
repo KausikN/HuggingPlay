@@ -1,5 +1,7 @@
 """
 HuggingFace - Multimodal - Text to Video
+
+Ref: https://github.com/huggingface/diffusers/blob/main/src/diffusers/pipelines/stable_diffusion/pipeline_stable_diffusion.py
 """
 
 # Imports
@@ -23,8 +25,13 @@ def UI_Func_LoadInputs():
     if USERINPUT_Inputs["prompt"] == "":
         st.error("Invalid Prompt.")
         st.stop()
-    ## Length
-    USERINPUT_Inputs["n_frames"] = st.number_input("Enter N Frames", min_value=1, max_value=60, value=10, step=1)
+    # Height and Width
+    cols = st.columns(2)
+    USERINPUT_Inputs["height"] = cols[0].number_input("Enter Height", min_value=8, max_value=1024, value=256, step=8)
+    USERINPUT_Inputs["width"] = cols[1].number_input("Enter Width", min_value=8, max_value=1024, value=256, step=8)
+    ## N Inference Steps
+    USERINPUT_Inputs["num_inference_steps"] = st.number_input("N Inference Steps", min_value=1, value=50, step=1)
+    ## 
 
     return USERINPUT_Inputs
 
@@ -54,7 +61,11 @@ def HF_Func_LoadModel(model_info):
         "pipe": None,
     }
     # Load Model
-    PIPE = DiffusionPipeline.from_pretrained(HF_ID, **HF_PARAMS)
+    PIPE = DiffusionPipeline.from_pretrained(
+        HF_ID, 
+        torch_dtype=torch.float16,
+        **HF_PARAMS
+    )
     PIPE.scheduler = DPMSolverMultistepScheduler.from_config(PIPE.scheduler.config)
     PIPE.enable_model_cpu_offload()
     MODEL_DATA["pipe"] = PIPE
