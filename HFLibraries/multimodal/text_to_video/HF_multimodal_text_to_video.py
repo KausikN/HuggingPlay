@@ -42,7 +42,7 @@ def UI_Func_DisplayOutputs(OUTPUTS):
     '''
     # Init
     VIDEO_FRAMES = OUTPUTS["video_frames"]
-    VIDEO_SAVE_PATH = os.path.join(UTILS_PATHS["temp"], "HF_Multimodal_Text_to_Video.mp4")
+    VIDEO_SAVE_PATH = os.path.join(UTILS_PATHS["temp"], "HF_multimodal_text_to_video.mp4")
     # Save Outputs
     export_to_video(VIDEO_FRAMES, VIDEO_SAVE_PATH)
     # Display Outputs

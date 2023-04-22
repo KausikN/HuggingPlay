@@ -5,7 +5,19 @@
         "damo-vilab/text-to-video-ms-1.7b": {
             "pipeline": "default",
             "params": {
-                "variant": "fp16"
+                "variant": "memory efficient attention"
+            },
+            "output_params": {
+                "output_key": "frames"
+            }
+        },
+        "PAIR/text2video-zero-controlnet-canny-anime": {
+            "pipeline": "Zero-Shot",
+            "params": {
+                "variant": "memory efficient attention"
+            },
+            "output_params": {
+                "output_key": "images"
             }
         }
     }

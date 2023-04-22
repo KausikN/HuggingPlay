@@ -1,15 +1,16 @@
 """
 HuggingFace - Multimodal - Text to Video - Zero-Shot Text to Video Pipeline
 
-Ref: https://huggingface.co/docs/diffusers/api/pipelines/text_to_video_zero
+Ref: https://github.com/huggingface/diffusers/blob/main/src/diffusers/pipelines/text_to_video_synthesis/pipeline_text_to_video_zero.py
 """
 
 # Imports
 from Utils.Utils import *
 
 import torch
-from diffusers import DiffusionPipeline, DPMSolverMultistepScheduler
+from diffusers import TextToVideoZeroPipeline
 from diffusers.utils import export_to_video
+# import imageio
 
 # Main Functions
 ## UI Funcs
@@ -29,9 +30,10 @@ def UI_Func_LoadInputs():
     cols = st.columns(2)
     USERINPUT_Inputs["height"] = cols[0].number_input("Enter Height", min_value=8, max_value=1024, value=256, step=8)
     USERINPUT_Inputs["width"] = cols[1].number_input("Enter Width", min_value=8, max_value=1024, value=256, step=8)
-    ## N Inference Steps
-    USERINPUT_Inputs["num_inference_steps"] = st.number_input("N Inference Steps", min_value=1, value=50, step=1)
-    ## 
+    ## N Inference Steps and N Frames
+    cols = st.columns(2)
+    USERINPUT_Inputs["num_inference_steps"] = cols[0].number_input("N Inference Steps", min_value=1, value=50, step=1)
+    USERINPUT_Inputs["video_length"] = cols[1].number_input("N Frames", min_value=1, value=8, step=1)
 
     return USERINPUT_Inputs
 
@@ -41,7 +43,7 @@ def UI_Func_DisplayOutputs(OUTPUTS):
     '''
     # Init
     VIDEO_FRAMES = OUTPUTS["video_frames"]
-    VIDEO_SAVE_PATH = os.path.join(UTILS_PATHS["temp"], "HF_Multimodal_Text_to_Video.mp4")
+    VIDEO_SAVE_PATH = os.path.join(UTILS_PATHS["temp"], "HF_multimodal_text_to_video.mp4")
     # Save Outputs
     export_to_video(VIDEO_FRAMES, VIDEO_SAVE_PATH)
     # Display Outputs
@@ -55,18 +57,22 @@ def HF_Func_LoadModel(model_info):
     # Init
     HF_ID = model_info["hf_id"]
     HF_PARAMS = {} if "params" not in model_info["data"] else model_info["data"]["params"]
+    HF_OUTPUTPARAMS = {
+        "output_key": "images"
+    } if "output_params" not in model_info["data"] else model_info["data"]["output_params"]
     MODEL_DATA = {
         "hf_id": HF_ID,
         "hf_data": model_info["data"],
-        "pipe": None,
+        "hf_params": HF_PARAMS,
+        "hf_output_params": HF_OUTPUTPARAMS,
+        "pipe": None
     }
     # Load Model
-    PIPE = DiffusionPipeline.from_pretrained(
+    PIPE = TextToVideoZeroPipeline.from_pretrained(
         HF_ID, 
         torch_dtype=torch.float16,
         **HF_PARAMS
     )
-    PIPE.scheduler = DPMSolverMultistepScheduler.from_config(PIPE.scheduler.config)
     PIPE.enable_model_cpu_offload()
     MODEL_DATA["pipe"] = PIPE
     
@@ -78,12 +84,13 @@ def HF_Func_RunModel(MODEL_DATA, inputs):
     '''
     # Init
     PIPE = MODEL_DATA["pipe"]
-    OUTPUTS = {
-        "video_frames": None
-    }
+    OUTPUT_PARAMS = MODEL_DATA["hf_output_params"]
     # Run Model
-    
-    OUTPUTS["video_frames"] = PIPE(**inputs).frames
+    OUTPUTS_DATA = PIPE(**inputs)
+    OUTPUTS = {
+        "video_frames": OUTPUTS_DATA.__dict__[OUTPUT_PARAMS["output_key"]],
+        **{k: OUTPUTS_DATA.__dict__[k] for k in OUTPUTS_DATA.__dict__.keys() if k != OUTPUT_PARAMS["output_key"]}
+    }
 
     return OUTPUTS
 
