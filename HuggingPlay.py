@@ -8,7 +8,8 @@ from Utils.Utils import *
 ## Image
 ## Audio
 ## Multimodal
-from HFLibraries.Multimodal import HF_Multimodal_Text_to_Video
+from HFLibraries.multimodal.text_to_video import HF_multimodal_text_to_video
+from HFLibraries.multimodal.text_to_video import HF_multimodal_text_to_video_zeroshot
 
 # Main Functions
 def HuggingPlayUtils_LoadModelsInfo(TASKS):
@@ -30,7 +31,10 @@ def HuggingPlayUtils_LoadModelsInfo(TASKS):
             )
             ### Load Task Data
             task_data = json.load(open(task_path, "r"))
-            TASKS[task_type][task]["models"] = task_data["models"]
+            ### Iterate through all models
+            for pk in TASKS[task_type][task].keys(): TASKS[task_type][task][pk]["models"] = {}
+            for mk in task_data["models"].keys():
+                TASKS[task_type][task][task_data["models"][mk]["pipeline"]]["models"][mk] = task_data["models"][mk]
 
     return TASKS
 
@@ -47,26 +51,38 @@ TASK_TYPES = list(sorted(os.listdir(HF_PATHS["models_data"]["dir"])))
 TASKS = HuggingPlayUtils_LoadModelsInfo({
     "Text": {
         "Text Classification": {
-            "module": None,
-            "models": {}
+            "default": {
+                "module": None,
+                "models": {}
+            }
         }
     },
     "Image": {
         "Depth Estimation": {
-            "module": None,
-            "models": {}
+            "default": {
+                "module": None,
+                "models": {}
+            }
         },
     },
     "Audio": {
         "Text-to-Speech": {
-            "module": None,
-            "models": {}
+            "default": {
+                "module": None,
+                "models": {}
+            }
         }
     },
     "Multimodal": {
         "Text-to-Video": {
-            "module": HF_Multimodal_Text_to_Video,
-            "models": {}
+            "default": {
+                "module": HF_multimodal_text_to_video,
+                "models": {}
+            },
+            "Zero-Shot": {
+                "module": HF_multimodal_text_to_video_zeroshot,
+                "models": {}
+            }
         }
     }
 })

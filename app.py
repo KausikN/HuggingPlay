@@ -114,10 +114,12 @@ def run_models():
     ## Load Task
     USERINPUT_TaskType = st.sidebar.selectbox("Task Type", TASKS.keys())
     USERINPUT_Task = st.sidebar.selectbox("Task", TASKS[USERINPUT_TaskType].keys())
-    TASK_DATA = dict(TASKS[USERINPUT_TaskType][USERINPUT_Task])
+    USERINPUT_Pipeline = st.sidebar.selectbox("Pipeline", TASKS[USERINPUT_TaskType][USERINPUT_Task].keys())
+    TASK_DATA = dict(TASKS[USERINPUT_TaskType][USERINPUT_Task][USERINPUT_Pipeline])
     TASK_DATA.update({
         "task_type": USERINPUT_TaskType,
-        "task": USERINPUT_Task
+        "task": USERINPUT_Task,
+        "pipeline": USERINPUT_Pipeline
     })
     st.markdown(f"## {USERINPUT_TaskType} - {USERINPUT_Task}")
     ## Load Model

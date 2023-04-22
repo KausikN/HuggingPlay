@@ -3,6 +3,7 @@
     "task": "Text-to-Video",
     "models": {
         "damo-vilab/text-to-video-ms-1.7b": {
+            "pipeline": "default",
             "params": {
                 "variant": "fp16"
             }
