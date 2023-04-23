@@ -4,5 +4,6 @@ opencv-python-headless
 transformers
 datasets
 
+accelerate
 diffusers
 sentencepiece

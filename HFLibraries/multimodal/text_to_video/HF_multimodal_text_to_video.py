@@ -9,7 +9,8 @@ from Utils.Utils import *
 
 import torch
 from diffusers import DiffusionPipeline, DPMSolverMultistepScheduler
-from diffusers.utils import export_to_video
+# from diffusers.utils import export_to_video
+import imageio
 
 # Main Functions
 ## UI Funcs
@@ -44,7 +45,11 @@ def UI_Func_DisplayOutputs(OUTPUTS):
     VIDEO_FRAMES = OUTPUTS["video_frames"]
     VIDEO_SAVE_PATH = os.path.join(UTILS_PATHS["temp"], "HF_multimodal_text_to_video.mp4")
     # Save Outputs
-    export_to_video(VIDEO_FRAMES, VIDEO_SAVE_PATH)
+    imageio.mimsave(
+        VIDEO_SAVE_PATH, 
+        [(f).astype("uint8") for f in VIDEO_FRAMES], 
+        fps=16
+    )
     # Display Outputs
     st.video(VIDEO_SAVE_PATH)
 
