@@ -78,7 +78,10 @@ def UI_LoadModel(TASK_DATA):
         if USERINPUT_ModelInfo["hf_id"] == None:
             st.error("No Documented Models Available for this Task.")
             st.stop()
-        USERINPUT_ModelInfo["data"] = TASK_DATA["models"][USERINPUT_ModelInfo["hf_id"]]
+        USERINPUT_ModelInfo["data"] = json.loads(st.text_area(
+            "Enter Model Data (JSON)",
+            json.dumps(TASK_DATA["models"][USERINPUT_ModelInfo["hf_id"]], indent=8)
+        ))
     ## Custom HF-ID
     else:
         USERINPUT_ModelInfo["hf_id"] = st.text_input("Enter Model HF-ID").strip()
