@@ -85,6 +85,12 @@ def UI_LoadModel(TASK_DATA):
         if USERINPUT_ModelInfo["hf_id"] == "":
             st.error("Invalid HF-ID.")
             st.stop()
+        USERINPUT_ModelInfo["data"] = json.loads(st.text_area(
+            "Enter Model Data (JSON)",
+            json.dumps({
+                "params": {}
+            }, indent=8)
+        ))
 
     return USERINPUT_ModelInfo
 

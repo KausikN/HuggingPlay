@@ -9,7 +9,7 @@ from Utils.Utils import *
 ## Audio
 ## Multimodal
 from HFLibraries.multimodal.text_to_video import HF_multimodal_text_to_video
-from HFLibraries.multimodal.text_to_video import HF_multimodal_text_to_video_zeroshot
+from HFLibraries.multimodal.text_to_video import HF_multimodal_text_to_video_zero_shot
 
 # Main Functions
 def HuggingPlayUtils_LoadModelsInfo(TASKS):
@@ -80,7 +80,7 @@ TASKS = HuggingPlayUtils_LoadModelsInfo({
                 "models": {}
             },
             "Zero-Shot": {
-                "module": HF_multimodal_text_to_video_zeroshot,
+                "module": HF_multimodal_text_to_video_zero_shot,
                 "models": {}
             }
         }

@@ -2,6 +2,20 @@
     "task_type": "Audio",
     "task": "Text-to-Speech",
     "models": {
-        
+        "microsoft/speecht5_tts": {
+            "pipeline": "default",
+            "params": {
+                "processor": {
+                    "return_tensors": "pt"
+                },
+                "speaker": {
+                    "vocoder_id": "microsoft/speecht5_hifigan",
+                    "dataset_id": "Matthijs/cmu-arctic-xvectors",
+                    "split": "validation",
+                    "xvector_column": "xvector",
+                    "xvector_index": 0
+                }
+            }
+        }
     }
 }
