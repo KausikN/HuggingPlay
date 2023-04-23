@@ -37,18 +37,25 @@ def UI_Func_LoadInputs():
 
     return USERINPUT_Inputs
 
-def UI_Func_DisplayOutputs(OUTPUTS):
+def UI_Func_DisplayOutputs(OUTPUTS, interactive_display=True):
     '''
     UI - Display Outputs
     '''
     # Init
+    PLOT_FUNC = st.plotly_chart if interactive_display else st.pyplot
     DEPTH_IMAGE = OUTPUTS["depth_image"]
     IMAGE_SAVE_PATH = os.path.join(UTILS_PATHS["temp"], "HF_image_depth_estimation.png")
     # Save Outputs
     DEPTH_IMAGE = Image.fromarray(DEPTH_IMAGE)
     DEPTH_IMAGE.save(IMAGE_SAVE_PATH)
     # Display Outputs
-    st.image(IMAGE_SAVE_PATH, caption="Depth Image", use_column_width=True)
+    # st.image(IMAGE_SAVE_PATH, caption="Depth Image", use_column_width=True)
+    FIG = plt.figure(figsize=(10, 10))
+    FULL_IMAGE = np.concatenate([OUTPUTS["image"], np.expand_dims(DEPTH_IMAGE, axis=-1)], axis=-1)
+    plt.imshow(FULL_IMAGE)
+    plt.title("Depth")
+    plt.axis("off")
+    PLOT_FUNC(FIG)
 
 ## HF Funcs
 def HF_Func_LoadModel(model_info):
@@ -104,6 +111,7 @@ def HF_Func_RunModel(MODEL_DATA, inputs):
     OUTPUT_DATA = (OUTPUT_DATA * 255 / np.max(OUTPUT_DATA)).astype("uint8")
     # Form Outputs
     OUTPUTS = {
+        "image": inputs["processor"]["image"],
         "depth_image": OUTPUT_DATA
     }
 
