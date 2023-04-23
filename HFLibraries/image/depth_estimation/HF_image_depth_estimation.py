@@ -95,7 +95,7 @@ def HF_Func_RunModel(MODEL_DATA, inputs):
     # Interpolate to original size
     OUTPUT_DATA = torch.nn.functional.interpolate(
         OUTPUT_DATA.unsqueeze(1),
-        size=inputs["processor"]["image"].shape[::-1],
+        size=inputs["processor"]["image"].shape[:2][::-1],
         mode="bicubic",
         align_corners=False
     )
