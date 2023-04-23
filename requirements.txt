@@ -1,6 +1,7 @@
 streamlit
 opencv-python-headless
 matplotlib
+plotly
 
 soundfile
 imageio
