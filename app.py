@@ -80,7 +80,8 @@ def UI_LoadModel(TASK_DATA):
             st.stop()
         USERINPUT_ModelInfo["data"] = json.loads(st.text_area(
             "Enter Model Data (JSON)",
-            json.dumps(TASK_DATA["models"][USERINPUT_ModelInfo["hf_id"]], indent=8)
+            json.dumps(TASK_DATA["models"][USERINPUT_ModelInfo["hf_id"]], indent=8),
+            height=300
         ))
     ## Custom HF-ID
     else:
@@ -92,7 +93,8 @@ def UI_LoadModel(TASK_DATA):
             "Enter Model Data (JSON)",
             json.dumps({
                 "params": {}
-            }, indent=8)
+            }, indent=8),
+            height=300
         ))
 
     return USERINPUT_ModelInfo

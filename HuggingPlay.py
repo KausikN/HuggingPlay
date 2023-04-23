@@ -7,6 +7,7 @@ from Utils.Utils import *
 ## Text
 ## Image
 ## Audio
+from HFLibraries.audio.text_to_speech import HF_audio_text_to_speech
 ## Multimodal
 from HFLibraries.multimodal.text_to_video import HF_multimodal_text_to_video
 from HFLibraries.multimodal.text_to_video import HF_multimodal_text_to_video_zero_shot
@@ -68,7 +69,7 @@ TASKS = HuggingPlayUtils_LoadModelsInfo({
     "Audio": {
         "Text-to-Speech": {
             "default": {
-                "module": None,
+                "module": HF_audio_text_to_speech,
                 "models": {}
             }
         }
