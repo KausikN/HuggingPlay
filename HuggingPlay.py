@@ -6,6 +6,7 @@ Set of tools for running and visualizing huggingface models for various tasks
 from Utils.Utils import *
 ## Text
 ## Image
+from HFLibraries.image.depth_estimation import HF_image_depth_estimation
 ## Audio
 from HFLibraries.audio.text_to_speech import HF_audio_text_to_speech
 ## Multimodal
@@ -61,7 +62,7 @@ TASKS = HuggingPlayUtils_LoadModelsInfo({
     "Image": {
         "Depth Estimation": {
             "default": {
-                "module": None,
+                "module": HF_image_depth_estimation,
                 "models": {}
             }
         },

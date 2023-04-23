@@ -7,10 +7,11 @@ Ref: https://github.com/huggingface/diffusers/blob/main/src/diffusers/pipelines/
 # Imports
 from Utils.Utils import *
 
+import imageio
+
 import torch
 from diffusers import TextToVideoZeroPipeline
 # from diffusers.utils import export_to_video
-import imageio
 
 # Main Functions
 ## UI Funcs

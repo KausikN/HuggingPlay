@@ -1,5 +1,5 @@
 """
-HuggingFace - Multimodal - Text to Video - Standard Pipeline
+HuggingFace - Multimodal - Text to Video - Standard Pipeline (Diffusion with DPM-Solver-Multistep-Scheduler)
 
 Ref: https://github.com/huggingface/diffusers/blob/main/src/diffusers/pipelines/stable_diffusion/pipeline_stable_diffusion.py
 """
@@ -7,10 +7,10 @@ Ref: https://github.com/huggingface/diffusers/blob/main/src/diffusers/pipelines/
 # Imports
 from Utils.Utils import *
 
+import imageio
+
 import torch
 from diffusers import DiffusionPipeline, DPMSolverMultistepScheduler
-# from diffusers.utils import export_to_video
-import imageio
 
 # Main Functions
 ## UI Funcs

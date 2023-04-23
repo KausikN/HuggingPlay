@@ -2,6 +2,30 @@
     "task_type": "Image",
     "task": "Depth Estimation",
     "models": {
-        
+        "Intel/dpt-large": {
+            "pipeline": "default",
+            "params": {
+                "processor": {
+                    "return_tensors": "pt"
+                }
+            }
+        },
+        "Intel/dpt-hybrid-midas": {
+            "pipeline": "default",
+            "params": {
+                "processor": {
+                    "return_tensors": "pt"
+                }
+            }
+        },
+
+        "vinvino02/glpn-kitti": {
+            "pipeline": "GLPN",
+            "params": {}
+        },
+        "vinvino02/glpn-nyu": {
+            "pipeline": "GLPN",
+            "params": {}
+        }
     }
 }

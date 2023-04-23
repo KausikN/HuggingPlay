@@ -1,10 +1,12 @@
 streamlit
 opencv-python-headless
 
+soundfile
+imageio
+
 transformers
 datasets
 
 accelerate
 diffusers
 sentencepiece
-soundfile

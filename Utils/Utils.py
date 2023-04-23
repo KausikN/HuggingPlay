@@ -11,6 +11,7 @@ os.environ["HF_HOME"] = HF_CACHE_PATH
 os.environ["TRANSFORMERS_CACHE"] = HF_CACHE_PATH
 
 # Imports
+import cv2
 import json
 import pickle
 import functools

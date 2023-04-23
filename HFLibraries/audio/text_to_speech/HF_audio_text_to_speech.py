@@ -1,5 +1,5 @@
 """
-HuggingFace - Audio - Text to Speech - Standard Pipeline
+HuggingFace - Audio - Text to Speech - Standard Pipeline (Speech T5)
 
 Ref: 
 """
@@ -7,8 +7,9 @@ Ref:
 # Imports
 from Utils.Utils import *
 
-import torch
 import soundfile as sf
+
+import torch
 from datasets import load_dataset
 from transformers import SpeechT5Processor, SpeechT5ForTextToSpeech, SpeechT5HifiGan
 
