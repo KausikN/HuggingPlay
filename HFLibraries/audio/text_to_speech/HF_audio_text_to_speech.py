@@ -99,7 +99,7 @@ def HF_Func_RunModel(MODEL_DATA, inputs):
     MODEL = MODEL_DATA["model"]
     # Run Model
     PROC_INPUTS = MODEL_DATA["processor"](text=inputs["processor"]["text"], **MODEL_DATA["hf_params"]["processor"])
-    AUDIO_DATA = MODEL.generate_speech(inputs["input_ids"], MODEL_DATA["voice_embeddings"], vocoder=MODEL_DATA["vocoder"])
+    AUDIO_DATA = MODEL.generate_speech(PROC_INPUTS["input_ids"], MODEL_DATA["voice_embeddings"], vocoder=MODEL_DATA["vocoder"])
     AUDIO_DATA = AUDIO_DATA.numpy()
     OUTPUTS = {
         "audio_data": AUDIO_DATA
