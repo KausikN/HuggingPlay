@@ -22,8 +22,7 @@ def UI_Func_LoadInputs():
     USERINPUT_Inputs = {
         "processor": {
             "text": ""
-        },
-        "speaker": {}
+        }
     }
     # Ask Inputs
     ## Prompt
