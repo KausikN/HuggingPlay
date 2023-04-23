@@ -64,6 +64,10 @@ TASKS = HuggingPlayUtils_LoadModelsInfo({
             "default": {
                 "module": HF_image_depth_estimation,
                 "models": {}
+            },
+            "GLPN": {
+                "module": None,
+                "models": {}
             }
         },
     },
