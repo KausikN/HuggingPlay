@@ -25,7 +25,7 @@ def UI_Func_LoadInputs():
     }
     # Ask Inputs
     ## Prompt
-    USERINPUT_Inputs["text"] = st.text_input("Enter Text").strip()
+    USERINPUT_Inputs["text"] = st.text_area("Enter Text", height=300).strip()
     if USERINPUT_Inputs["text"] == "":
         st.error("Text is empty.")
         st.stop()
