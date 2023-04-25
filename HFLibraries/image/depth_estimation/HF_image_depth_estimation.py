@@ -38,7 +38,7 @@ def Utils_Display3DImage(I, invertZ=True):
     # Plot and apply face colors
     FIG = go.Figure(data=[go.Surface(
         z=Z, x=X, y=Y,
-        surfacecolor=C
+        # surfacecolor=C
     )])
     FIG.update_layout(
         title="Depth", autosize=False,
