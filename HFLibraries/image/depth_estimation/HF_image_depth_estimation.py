@@ -23,8 +23,9 @@ def Utils_Display3DImage(I, invertZ=True):
     C = np.array(I[:, :, :3], dtype=float) / 255.0
     # Plot
     FIG = plt.figure()
-    AX = FIG.add_subplot(111, projection="3d")
-    AX.plot_surface(X, Y, Z, rstride=1, cstride=1, facecolors=C, shade=False)
+    AX = plt.axes(projection="3d")
+    # AX = FIG.add_subplot(111, projection="3d")
+    AX.plot_surface(X, Y, Z, rstride=1, cstride=1, facecolors=C)
 
     return FIG
 
@@ -64,7 +65,11 @@ def UI_Func_DisplayOutputs(OUTPUTS, interactive_display=True):
     DEPTH_IMAGE = Image.fromarray(DEPTH_IMAGE)
     DEPTH_IMAGE.save(IMAGE_SAVE_PATH)
     # Display Outputs
-    # st.image(IMAGE_SAVE_PATH, caption="Depth Image", use_column_width=True)
+    ## Side-by-Side
+    cols = st.columns(2)
+    cols[0].image(OUTPUTS["image"], caption="Input Image", use_column_width=True)
+    cols[1].image(IMAGE_SAVE_PATH, caption="Depth Image", use_column_width=True)
+    ## 3D Plot
     FULL_IMAGE = np.concatenate([OUTPUTS["image"], np.expand_dims(DEPTH_IMAGE, axis=-1)], axis=-1)
     # plt.imshow(FULL_IMAGE)
     FIG = Utils_Display3DImage(FULL_IMAGE, invertZ=True)
