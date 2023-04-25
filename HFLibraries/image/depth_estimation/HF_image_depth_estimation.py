@@ -8,6 +8,7 @@ Ref:
 from Utils.Utils import *
 
 from PIL import Image
+import plotly.graph_objects as go
 
 import torch
 from transformers import DPTImageProcessor, DPTForDepthEstimation
@@ -15,17 +16,35 @@ from transformers import DPTImageProcessor, DPTForDepthEstimation
 # Main Functions
 ## Utils Functions
 def Utils_Display3DImage(I, invertZ=True):
+    # Matplotlib
+    # # Init
+    # xx, yy = np.meshgrid(np.linspace(0, 1, I.shape[1]), np.linspace(0, 1, I.shape[0]))
+    # X, Y = xx, yy
+    # Z = np.array(I[:, :, -1], dtype=float) / 255.0
+    # if invertZ: Z = 1.0 - Z
+    # C = np.array(I[:, :, :3], dtype=float) / 255.0
+    # # Plot
+    # FIG = plt.figure()
+    # AX = plt.axes(projection="3d")
+    # # AX = FIG.add_subplot(111, projection="3d")
+    # AX.plot_surface(X, Y, Z, rstride=1, cstride=1, facecolors=C)
+
+    # Plotly
     # Init
-    xx, yy = np.meshgrid(np.linspace(0, 1, I.shape[1]), np.linspace(0, 1, I.shape[0]))
-    X, Y = xx, yy
+    X, Y = np.linspace(0, 1, I.shape[1]), np.linspace(0, 1, I.shape[0])
     Z = np.array(I[:, :, -1], dtype=float) / 255.0
     if invertZ: Z = 1.0 - Z
     C = np.array(I[:, :, :3], dtype=float) / 255.0
-    # Plot
-    FIG = plt.figure()
-    AX = plt.axes(projection="3d")
-    # AX = FIG.add_subplot(111, projection="3d")
-    AX.plot_surface(X, Y, Z, rstride=1, cstride=1, facecolors=C)
+    # Plot and apply face colors
+    FIG = go.Figure(data=[go.Surface(
+        z=Z, x=X, y=Y,
+        surfacecolor=C
+    )])
+    FIG.update_layout(
+        title="Depth", autosize=False,
+        width=500, height=500,
+        margin=dict(l=65, r=50, b=65, t=90)
+    )
 
     return FIG
 
