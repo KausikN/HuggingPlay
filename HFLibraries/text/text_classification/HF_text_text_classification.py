@@ -41,7 +41,7 @@ def UI_Func_DisplayOutputs(OUTPUTS, interactive_display=True):
     # Save Outputs
     # Display Outputs
     FIG = plt.figure()
-    plt.bar(OUTPUTS["classes"], OUTPUTS["prob_dist"])
+    plt.bar(list(OUTPUTS["classes"]), list(OUTPUTS["prob_dist"]))
     plt.title("Text Classification")
     PLOT_FUNC(FIG)
 
@@ -84,7 +84,9 @@ def HF_Func_RunModel(MODEL_DATA, inputs):
     TOKENIZER = MODEL_DATA["tokenizer"]
     MODEL = MODEL_DATA["model"]
     CLASSES = None
-    try: CLASSES = MODEL_DATA["config"].id2label
+    try:
+        CLASS_KEYS = sorted(list(MODEL_DATA["config"].id2label.keys()))
+        CLASSES = [MODEL_DATA["config"].id2label[k] for k in CLASS_KEYS]
     except: pass
     # Run Model
     MODEL_INPUTS = TOKENIZER.batch_encode_plus([inputs["text"]], **MODEL_DATA["hf_params"]["tokenizer"])
