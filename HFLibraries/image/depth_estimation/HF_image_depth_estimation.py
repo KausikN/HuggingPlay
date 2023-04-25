@@ -25,7 +25,7 @@ def Utils_Display3DImage(I, invertZ=True, preserveAspectRatio=True):
         elif I.shape[0] > I.shape[1]:
             LIMS[0] = I.shape[1]/I.shape[0]
     # Init
-    X, Y = np.linspace(0, 1, I.shape[1]), np.linspace(0, 1, I.shape[0])
+    X, Y = np.linspace(0, LIMS[0], I.shape[1]), np.linspace(0, LIMS[1], I.shape[0])
     Z = np.array(I[:, :, -1], dtype=float) / 255.0
     if invertZ: Z = 1.0 - Z
     C = np.array(I[:, :, :3], dtype=float) / 255.0
