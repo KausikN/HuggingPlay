@@ -2,6 +2,9 @@
     "task_type": "Text",
     "task": "Text Classification",
     "models": {
-        
+        "cardiffnlp/twitter-roberta-base-sentiment": {
+            "pipeline": "default",
+            "params": {}
+        }
     }
 }
