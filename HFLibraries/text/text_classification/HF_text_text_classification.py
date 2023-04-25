@@ -87,8 +87,8 @@ def HF_Func_RunModel(MODEL_DATA, inputs):
     try: CLASSES = MODEL_DATA["config"].id2label
     except: pass
     # Run Model
-    MODEL_INPUTS = TOKENIZER([inputs["text"]])
-    OUTPUTS = MODEL(**MODEL_INPUTS)
+    MODEL_INPUTS = TOKENIZER.batch_encode_plus([inputs["text"]], **MODEL_DATA["hf_params"]["tokenizer"])
+    OUTPUTS = MODEL(**MODEL_INPUTS, **MODEL_DATA["hf_params"]["model"])
     PROB_DIST = OUTPUTS.logits.cpu().detach().numpy()[0]
     CLASS_INDEX = np.argmax(PROB_DIST)
     CLASS = CLASSES[CLASS_INDEX] if CLASSES is not None else f"Class_{CLASS_INDEX}"

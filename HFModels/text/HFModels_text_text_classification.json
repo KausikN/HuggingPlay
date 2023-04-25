@@ -4,7 +4,11 @@
     "models": {
         "cardiffnlp/twitter-roberta-base-sentiment": {
             "pipeline": "default",
-            "params": {}
+            "params": {
+                "tokenizer": {
+                    "return_tensors": "pt"
+                }
+            }
         }
     }
 }
