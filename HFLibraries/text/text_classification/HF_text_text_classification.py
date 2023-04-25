@@ -25,7 +25,7 @@ def UI_Func_LoadInputs():
     }
     # Ask Inputs
     ## Prompt
-    USERINPUT_Inputs["text"] = st.file_uploader("Enter Text").strip()
+    USERINPUT_Inputs["text"] = st.text_input("Enter Text").strip()
     if USERINPUT_Inputs["text"] == "":
         st.error("Text is empty.")
         st.stop()
