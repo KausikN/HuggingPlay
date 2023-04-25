@@ -16,7 +16,14 @@ from transformers import DPTImageProcessor, DPTForDepthEstimation
 
 # Main Functions
 ## Utils Functions
-def Utils_Display3DImage(I, invertZ=True):
+def Utils_Display3DImage(I, invertZ=True, preserveAspectRatio=True):
+    # Aspect Ratio
+    LIMS = [1.0, 1.0]
+    if preserveAspectRatio:
+        if I.shape[1] > I.shape[0]:
+            LIMS[1] = I.shape[0]/I.shape[1]
+        elif I.shape[0] > I.shape[1]:
+            LIMS[0] = I.shape[1]/I.shape[0]
     # Init
     X, Y = np.linspace(0, 1, I.shape[1]), np.linspace(0, 1, I.shape[0])
     Z = np.array(I[:, :, -1], dtype=float) / 255.0
@@ -28,7 +35,16 @@ def Utils_Display3DImage(I, invertZ=True):
     xx, yy = np.meshgrid(X, Y)
     xx, yy, zz = xx.flatten(), yy.flatten(), Z.flatten()
     cc = C.reshape((-1, 3))
-    FIG = px.scatter_3d(x=xx, y=yy, z=zz, color=cc)
+    FIG = go.Figure(
+        data=[go.Scatter3d(
+            x=xx, y=yy, z=zz, 
+            mode="markers",
+            marker={
+                "color": [f"rgb({c[0]}, {c[1]}, {c[2]})" for c in cc],
+                "size": 3
+            }
+        )]
+    )
 
     # Update Layout
     FIG.update_layout(

@@ -21,11 +21,19 @@
 
         "vinvino02/glpn-kitti": {
             "pipeline": "GLPN",
-            "params": {}
+            "params": {
+                "processor": {
+                    "return_tensors": "pt"
+                }
+            }
         },
         "vinvino02/glpn-nyu": {
             "pipeline": "GLPN",
-            "params": {}
+            "params": {
+                "processor": {
+                    "return_tensors": "pt"
+                }
+            }
         }
     }
 }
