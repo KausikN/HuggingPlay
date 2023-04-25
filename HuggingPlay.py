@@ -7,6 +7,7 @@ from Utils.Utils import *
 ## Text
 ## Image
 from HFLibraries.image.depth_estimation import HF_image_depth_estimation
+from HFLibraries.image.depth_estimation import HF_image_depth_estimation_glpn
 ## Audio
 from HFLibraries.audio.text_to_speech import HF_audio_text_to_speech
 ## Multimodal
@@ -66,7 +67,7 @@ TASKS = HuggingPlayUtils_LoadModelsInfo({
                 "models": {}
             },
             "GLPN": {
-                "module": None,
+                "module": HF_image_depth_estimation_glpn,
                 "models": {}
             }
         },

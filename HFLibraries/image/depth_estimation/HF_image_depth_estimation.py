@@ -26,7 +26,9 @@ def Utils_Display3DImage(I, invertZ=True):
     # FIG = go.Figure(data=[go.Surface(x=X, y=Y, z=Z, colorscale="Viridis", surfacecolor=C)])
     # Plot - Scatter Plot
     xx, yy = np.meshgrid(X, Y)
-    FIG = px.scatter_3d(x=xx, y=yy, z=Z, color=C)
+    xx, yy, zz = xx.flatten(), yy.flatten(), Z.flatten()
+    cc = C.reshape((-1, 3))
+    FIG = px.scatter_3d(x=xx, y=yy, z=zz, color=cc)
 
     # Update Layout
     FIG.update_layout(
