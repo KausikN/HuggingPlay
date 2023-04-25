@@ -13,6 +13,21 @@ import torch
 from transformers import DPTImageProcessor, DPTForDepthEstimation
 
 # Main Functions
+## Utils Functions
+def Utils_Display3DImage(I, invertZ=True):
+    # Init
+    xx, yy = np.meshgrid(np.linspace(0, 1, I.shape[1]), np.linspace(0, 1, I.shape[0]))
+    X, Y = xx, yy
+    Z = np.array(I[:, :, -1], dtype=float) / 255.0
+    if invertZ: Z = 1.0 - Z
+    C = np.array(I[:, :, :3], dtype=float) / 255.0
+    # Plot
+    FIG = plt.figure()
+    AX = FIG.add_subplot(111, projection="3d")
+    AX.plot_surface(X, Y, Z, rstride=1, cstride=1, facecolors=C, shade=False)
+
+    return FIG
+
 ## UI Funcs
 def UI_Func_LoadInputs():
     '''
@@ -50,11 +65,9 @@ def UI_Func_DisplayOutputs(OUTPUTS, interactive_display=True):
     DEPTH_IMAGE.save(IMAGE_SAVE_PATH)
     # Display Outputs
     # st.image(IMAGE_SAVE_PATH, caption="Depth Image", use_column_width=True)
-    FIG = plt.figure(figsize=(10, 10))
     FULL_IMAGE = np.concatenate([OUTPUTS["image"], np.expand_dims(DEPTH_IMAGE, axis=-1)], axis=-1)
-    plt.imshow(FULL_IMAGE)
-    plt.title("Depth")
-    plt.axis("off")
+    # plt.imshow(FULL_IMAGE)
+    FIG = Utils_Display3DImage(FULL_IMAGE, invertZ=True)
     PLOT_FUNC(FIG)
 
 ## HF Funcs
