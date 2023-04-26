@@ -79,6 +79,8 @@ def UI_Func_LoadInputs(**params):
     ImageData = USERINPUT_Inputs["processor"]["image"].read()
     ImageData = cv2.imdecode(np.frombuffer(ImageData, np.uint8), cv2.IMREAD_COLOR)
     USERINPUT_Inputs["processor"]["image"] = cv2.cvtColor(ImageData, cv2.COLOR_BGR2RGB)
+    ## Display Input Image
+    st.image(USERINPUT_Inputs["processor"]["image"], caption="Input Image", use_column_width=True)
 
     return USERINPUT_Inputs
 
