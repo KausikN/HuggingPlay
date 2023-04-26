@@ -14,6 +14,17 @@ from transformers import AutoModelForSequenceClassification
 AutoModel = AutoModelForSequenceClassification
 
 # Main Functions
+## Utils Functions
+def Utils_DisplayClassification(prob_dist, classes):
+    '''
+    Utils - Display Classification
+    '''
+    FIG = plt.figure()
+    plt.bar(list(classes), list(prob_dist))
+    plt.title("Text Classification")
+
+    return FIG
+
 ## UI Funcs
 def UI_Func_LoadInputs(**params):
     '''
@@ -40,9 +51,7 @@ def UI_Func_DisplayOutputs(OUTPUTS, interactive_display=True, **params):
     PLOT_FUNC = st.plotly_chart if interactive_display else st.pyplot
     # Save Outputs
     # Display Outputs
-    FIG = plt.figure()
-    plt.bar(list(OUTPUTS["classes"]), list(OUTPUTS["prob_dist"]))
-    plt.title("Text Classification")
+    FIG = Utils_DisplayClassification(OUTPUTS["prob_dist"], OUTPUTS["classes"])
     PLOT_FUNC(FIG)
 
 ## HF Funcs
