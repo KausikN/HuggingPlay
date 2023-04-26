@@ -14,6 +14,55 @@ from datasets import load_dataset
 from transformers import SpeechT5Processor, SpeechT5ForTextToSpeech, SpeechT5HifiGan
 
 # Main Functions
+## Utils Functions
+def Utils_ReadAudio(path):
+    '''
+    Utils - Read Audio
+    '''
+    # Init
+    AUDIO_DATA = {}
+    # Read Audio
+    AUDIO_DATA["samples"], AUDIO_DATA["sample_rate"] = sf.read(path)
+    ## Get First Channel
+    if len(AUDIO_DATA["samples"].shape) > 1: AUDIO_DATA["samples"] = AUDIO_DATA["samples"][:, 0]
+    N = len(AUDIO_DATA["samples"])
+    AUDIO_DATA["times"] = np.linspace(0, N / AUDIO_DATA["sample_rate"], N, endpoint=False)
+    
+    return AUDIO_DATA
+
+def Utils_DisplayAudioWave(AUDIO_DATA):
+    '''
+    Utils - Display Audio Wave
+    '''
+    # Init
+
+    # Plot
+    FIG = plt.figure()
+    plt.plot(AUDIO_DATA["times"], AUDIO_DATA["samples"])
+    plt.title("Audio Wave")
+    plt.ylabel("Signal Value")
+    plt.xlabel("Time (s)")
+    plt.xlim(0, AUDIO_DATA["times"][-1])
+
+    return FIG
+
+def Utils_DisplayAudioSpectrogram(AUDIO_DATA):
+    '''
+    Utils - Display Audio Spectrogram
+    '''
+    # Init
+
+    # Plot
+    FIG = plt.figure()
+    plt.specgram(AUDIO_DATA["samples"], Fs=AUDIO_DATA["sample_rate"], vmin=-20, vmax=50)
+    plt.title("Audio Spectrogram")
+    plt.ylabel("Frequency (Hz)")
+    plt.xlabel("Time (s)")
+    plt.xlim(0, AUDIO_DATA["times"][-1])
+    plt.colorbar()
+
+    return FIG
+
 ## UI Funcs
 def UI_Func_LoadInputs(**params):
     '''
@@ -34,17 +83,25 @@ def UI_Func_LoadInputs(**params):
 
     return USERINPUT_Inputs
 
-def UI_Func_DisplayOutputs(OUTPUTS, **params):
+def UI_Func_DisplayOutputs(OUTPUTS, interactive_display=True, **params):
     '''
     UI - Display Outputs
     '''
     # Init
+    PLOT_FUNC = st.plotly_chart if interactive_display else st.pyplot
     AUDIO_DATA = OUTPUTS["audio_data"]
     AUDIO_SAVE_PATH = os.path.join(UTILS_PATHS["temp"], "HF_audio_text_to_speech.wav")
     # Save Outputs
     sf.write(AUDIO_SAVE_PATH, AUDIO_DATA, samplerate=16000)
     # Display Outputs
     st.audio(AUDIO_SAVE_PATH)
+    ## Plots
+    AUDIO_DATA = Utils_ReadAudio(AUDIO_SAVE_PATH)
+    FIGS = {
+        "wave": Utils_DisplayAudioWave(AUDIO_DATA),
+        "spectrogram": Utils_DisplayAudioSpectrogram(AUDIO_DATA)
+    }
+    for k in FIGS.keys(): PLOT_FUNC(FIGS[k])
 
 ## HF Funcs
 def HF_Func_LoadModel(model_info, **params):
