@@ -113,7 +113,7 @@ def UI_Func_LoadInputs(**params):
 def UI_Func_DisplayOutputs(
         OUTPUTS, 
         interactive_display=True, 
-        invert_z=True, preserve_aspect_ratio=True, plot_mode="surface",
+        invert_z=True, preserve_aspect_ratio=True, plot_mode="scatter",
         **params
     ):
     '''
