@@ -89,11 +89,10 @@ def UI_LoadModel(TASK_DATA):
         if USERINPUT_ModelInfo["hf_id"] == "":
             st.error("Invalid HF-ID.")
             st.stop()
+        DefaultParams = TASK_DATA["models"][list(TASK_DATA["models"].keys())[0]]
         USERINPUT_ModelInfo["data"] = json.loads(st.text_area(
             "Enter Model Data (JSON)",
-            json.dumps({
-                "params": {}
-            }, indent=8),
+            json.dumps(DefaultParams, indent=8),
             height=300
         ))
 
