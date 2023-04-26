@@ -18,17 +18,22 @@ from . import HF_image_depth_estimation
 
 # Main Functions
 ## UI Funcs
-def UI_Func_LoadInputs():
+def UI_Func_LoadInputs(**params):
     '''
     UI - Load Inputs
     '''
-    return HF_image_depth_estimation.UI_FUNCS["load_inputs"]()
+    return HF_image_depth_estimation.UI_FUNCS["load_inputs"](**params)
 
-def UI_Func_DisplayOutputs(OUTPUTS, interactive_display=True):
+def UI_Func_DisplayOutputs(OUTPUTS, interactive_display=True, invert_z=True, preserve_aspect_ratio=True, **params):
     '''
     UI - Display Outputs
     '''
-    return HF_image_depth_estimation.UI_FUNCS["display_outputs"](OUTPUTS, interactive_display=interactive_display)
+    return HF_image_depth_estimation.UI_FUNCS["display_outputs"](
+        OUTPUTS, 
+        interactive_display=interactive_display, 
+        invert_z=invert_z, preserve_aspect_ratio=preserve_aspect_ratio,
+        **params
+    )
 
 ## HF Funcs
 def HF_Func_LoadModel(model_info):
@@ -61,7 +66,7 @@ def HF_Func_LoadModel(model_info):
     
     return MODEL_DATA
 
-def HF_Func_RunModel(MODEL_DATA, inputs):
+def HF_Func_RunModel(MODEL_DATA, inputs, **params):
     '''
     HF - Run Model
     '''

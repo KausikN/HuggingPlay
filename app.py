@@ -119,6 +119,7 @@ def run_models():
     st.header("HuggingPlay - Run")
 
     # Prereq Loaders
+    LoadCache()
 
     # Load Inputs
     ## Load Task
@@ -150,8 +151,36 @@ def run_models():
 
     # Display Outputs
     st.markdown("## Outputs")
-    MODULE.UI_FUNCS["display_outputs"](OUTPUTS)
-    
+    MODULE.UI_FUNCS["display_outputs"](OUTPUTS, **CACHE["settings"])
+
+def settings():
+    global CACHE
+    # Title
+    st.header("Settings")
+
+    # Load Inputs
+    ## Init
+    LoadCache()
+    SETTINGS = CACHE["settings"] if "settings" in CACHE.keys() else {
+        "interactive_display": True
+    }
+    ## Plots Settings
+    st.markdown("## Plots Settings")
+    ### Interactive Plots
+    SETTINGS["interactive_display"] = st.checkbox("Interactive Display", value=SETTINGS["interactive_display"])
+    # Save Inputs
+    if st.button("Save Settings"):
+        CACHE["settings"] = SETTINGS
+        SaveCache()
+
+    ## Operations
+    st.markdown("## Operations")
+    ### Clear HF Cache
+    if st.button("Clear HF Cache"):
+        os.system(f"rm -rf {HF_CACHE_PATH}")
+        os.makedirs(HF_CACHE_PATH, exist_ok=True)
+        st.success("Hugging-Face Cache Cleared.")
+
 #############################################################################################################################
 # Driver Code
 if __name__ == "__main__":

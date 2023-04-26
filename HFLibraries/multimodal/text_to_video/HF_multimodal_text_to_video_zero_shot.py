@@ -15,7 +15,7 @@ from diffusers import TextToVideoZeroPipeline
 
 # Main Functions
 ## UI Funcs
-def UI_Func_LoadInputs():
+def UI_Func_LoadInputs(**params):
     '''
     UI - Load Inputs
     '''
@@ -38,7 +38,7 @@ def UI_Func_LoadInputs():
 
     return USERINPUT_Inputs
 
-def UI_Func_DisplayOutputs(OUTPUTS):
+def UI_Func_DisplayOutputs(OUTPUTS, **params):
     '''
     UI - Display Outputs
     '''
@@ -55,7 +55,7 @@ def UI_Func_DisplayOutputs(OUTPUTS):
     st.video(VIDEO_SAVE_PATH)
 
 ## HF Funcs
-def HF_Func_LoadModel(model_info):
+def HF_Func_LoadModel(model_info, **params):
     '''
     HF - Load Model
     '''
@@ -83,7 +83,7 @@ def HF_Func_LoadModel(model_info):
     
     return MODEL_DATA
 
-def HF_Func_RunModel(MODEL_DATA, inputs):
+def HF_Func_RunModel(MODEL_DATA, inputs, **params):
     '''
     HF - Run Model
     '''

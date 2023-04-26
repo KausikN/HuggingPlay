@@ -16,10 +16,10 @@ from transformers import DPTImageProcessor, DPTForDepthEstimation
 
 # Main Functions
 ## Utils Functions
-def Utils_Display3DImage(I, invertZ=True, preserveAspectRatio=True):
+def Utils_Display3DImage(I, invert_z=True, preserve_aspect_ratio=True):
     # Aspect Ratio
     LIMS = [1.0, 1.0]
-    if preserveAspectRatio:
+    if preserve_aspect_ratio:
         if I.shape[1] > I.shape[0]:
             LIMS[1] = I.shape[0]/I.shape[1]
         elif I.shape[0] > I.shape[1]:
@@ -27,7 +27,7 @@ def Utils_Display3DImage(I, invertZ=True, preserveAspectRatio=True):
     # Init
     X, Y = np.linspace(0, LIMS[0], I.shape[1]), np.linspace(0, LIMS[1], I.shape[0])
     Z = np.array(I[:, :, -1], dtype=float) / 255.0
-    if invertZ: Z = 1.0 - Z
+    if invert_z: Z = 1.0 - Z
     C = np.array(I[:, :, :3], dtype=float) / 255.0
     # Plot - Surface Plot
     # FIG = go.Figure(data=[go.Surface(x=X, y=Y, z=Z, colorscale="Viridis", surfacecolor=C)])
@@ -56,7 +56,7 @@ def Utils_Display3DImage(I, invertZ=True, preserveAspectRatio=True):
     return FIG
 
 ## UI Funcs
-def UI_Func_LoadInputs():
+def UI_Func_LoadInputs(**params):
     '''
     UI - Load Inputs
     '''
@@ -79,7 +79,7 @@ def UI_Func_LoadInputs():
 
     return USERINPUT_Inputs
 
-def UI_Func_DisplayOutputs(OUTPUTS, interactive_display=True):
+def UI_Func_DisplayOutputs(OUTPUTS, interactive_display=True, invert_z=True, preserve_aspect_ratio=True, **params):
     '''
     UI - Display Outputs
     '''
@@ -98,11 +98,11 @@ def UI_Func_DisplayOutputs(OUTPUTS, interactive_display=True):
     ## 3D Plot
     FULL_IMAGE = np.concatenate([OUTPUTS["image"], np.expand_dims(DEPTH_IMAGE, axis=-1)], axis=-1)
     # plt.imshow(FULL_IMAGE)
-    FIG = Utils_Display3DImage(FULL_IMAGE, invertZ=True)
+    FIG = Utils_Display3DImage(FULL_IMAGE, invert_z=invert_z, preserve_aspect_ratio=preserve_aspect_ratio)
     PLOT_FUNC(FIG)
 
 ## HF Funcs
-def HF_Func_LoadModel(model_info):
+def HF_Func_LoadModel(model_info, **params):
     '''
     HF - Load Model
     '''
@@ -132,7 +132,7 @@ def HF_Func_LoadModel(model_info):
     
     return MODEL_DATA
 
-def HF_Func_RunModel(MODEL_DATA, inputs):
+def HF_Func_RunModel(MODEL_DATA, inputs, **params):
     '''
     HF - Run Model
     '''

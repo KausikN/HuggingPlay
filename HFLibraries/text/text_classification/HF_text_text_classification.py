@@ -15,7 +15,7 @@ AutoModel = AutoModelForSequenceClassification
 
 # Main Functions
 ## UI Funcs
-def UI_Func_LoadInputs():
+def UI_Func_LoadInputs(**params):
     '''
     UI - Load Inputs
     '''
@@ -32,7 +32,7 @@ def UI_Func_LoadInputs():
 
     return USERINPUT_Inputs
 
-def UI_Func_DisplayOutputs(OUTPUTS, interactive_display=True):
+def UI_Func_DisplayOutputs(OUTPUTS, interactive_display=True, **params):
     '''
     UI - Display Outputs
     '''
@@ -46,7 +46,7 @@ def UI_Func_DisplayOutputs(OUTPUTS, interactive_display=True):
     PLOT_FUNC(FIG)
 
 ## HF Funcs
-def HF_Func_LoadModel(model_info):
+def HF_Func_LoadModel(model_info, **params):
     '''
     HF - Load Model
     '''
@@ -76,7 +76,7 @@ def HF_Func_LoadModel(model_info):
     
     return MODEL_DATA
 
-def HF_Func_RunModel(MODEL_DATA, inputs):
+def HF_Func_RunModel(MODEL_DATA, inputs, **params):
     '''
     HF - Run Model
     '''
