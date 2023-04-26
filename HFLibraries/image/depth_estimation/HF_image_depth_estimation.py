@@ -16,6 +16,22 @@ from transformers import DPTImageProcessor, DPTForDepthEstimation
 
 # Main Functions
 ## Utils Functions
+def Utils_ResizeImage(I, max_size=256):
+    '''
+    Utils - Resize Image to fit max size in width or height
+    '''
+    # Init
+    NEW_SIZE = [max_size, max_size]
+    # Find New Size
+    if I.shape[1] > I.shape[0]:
+        NEW_SIZE[0] = int((I.shape[0]/I.shape[1]) * max_size)
+    elif I.shape[0] > I.shape[1]:
+        NEW_SIZE[1] = int((I.shape[1]/I.shape[0]) * max_size)
+    # Resize
+    I_resized = cv2.resize(I, tuple(NEW_SIZE[::-1]))
+
+    return I_resized
+
 def Utils_Display3DImage(I, invert_z=True, preserve_aspect_ratio=True):
     '''
     Utils - Display 3D Image
