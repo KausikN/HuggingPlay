@@ -12,3 +12,4 @@ datasets
 accelerate
 diffusers
 sentencepiece
+torchaudio
