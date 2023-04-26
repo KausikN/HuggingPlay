@@ -32,7 +32,7 @@ def Utils_ResizeImage(I, max_size=256):
 
     return I_resized
 
-def Utils_Display3DImage(I, invert_z=True, preserve_aspect_ratio=True):
+def Utils_Display3DImage(I, invert_z=True, preserve_aspect_ratio=True, plot_mode="scatter"):
     '''
     Utils - Display 3D Image
     '''
@@ -48,22 +48,32 @@ def Utils_Display3DImage(I, invert_z=True, preserve_aspect_ratio=True):
     Z = np.array(I[:, :, -1], dtype=float) / 255.0
     if invert_z: Z = 1.0 - Z
     C = np.array(I[:, :, :3], dtype=float) / 255.0
-    # Plot - Surface Plot
-    # FIG = go.Figure(data=[go.Surface(x=X, y=Y, z=Z, colorscale="Viridis", surfacecolor=C)])
-    # Plot - Scatter Plot
-    xx, yy = np.meshgrid(X, Y)
-    xx, yy, zz = xx.flatten(), yy.flatten(), Z.flatten()
-    cc = C.reshape((-1, 3))
-    FIG = go.Figure(
-        data=[go.Scatter3d(
-            x=xx, y=yy, z=zz, 
-            mode="markers",
-            marker={
-                "color": [f"rgb({c[0]}, {c[1]}, {c[2]})" for c in cc],
-                "size": 3
-            }
-        )]
-    )
+    # Choose Plot Type
+    if plot_mode.lower() == "surface":
+        # Plot - Surface Plot
+        facecolors = np.array(C * 255.0, dtype=np.uint8)
+        I_8bit = Image.fromarray(facecolors).convert("P", palette="WEB", dither=None)
+        I_idx = Image.fromarray(facecolors).convert("P", palette="WEB")
+        idx_to_color = np.array(I_idx.getpalette()).reshape((-1, 3))
+        colorscale = [[i/255.0, "rgb({}, {}, {})".format(*rgb)] for i, rgb in enumerate(idx_to_color)]
+        FIG = go.Figure(data=[go.Surface(
+            z=Z, surfacecolor=I_8bit, cmin=0, cmax=255, colorscale=colorscale, showscale=False
+        )])
+    else:
+        # Plot - Scatter Plot
+        xx, yy = np.meshgrid(X, Y)
+        xx, yy, zz = xx.flatten(), yy.flatten(), Z.flatten()
+        cc = C.reshape((-1, 3))
+        FIG = go.Figure(
+            data=[go.Scatter3d(
+                x=xx, y=yy, z=zz, 
+                mode="markers",
+                marker={
+                    "color": [f"rgb({c[0]}, {c[1]}, {c[2]})" for c in cc],
+                    "size": 3
+                }
+            )]
+        )
 
     # Update Layout
     FIG.update_layout(
@@ -100,7 +110,12 @@ def UI_Func_LoadInputs(**params):
 
     return USERINPUT_Inputs
 
-def UI_Func_DisplayOutputs(OUTPUTS, interactive_display=True, invert_z=True, preserve_aspect_ratio=True, **params):
+def UI_Func_DisplayOutputs(
+        OUTPUTS, 
+        interactive_display=True, 
+        invert_z=True, preserve_aspect_ratio=True, plot_mode="surface",
+        **params
+    ):
     '''
     UI - Display Outputs
     '''
@@ -119,7 +134,11 @@ def UI_Func_DisplayOutputs(OUTPUTS, interactive_display=True, invert_z=True, pre
     ## 3D Plot
     FULL_IMAGE = np.concatenate([OUTPUTS["image"], np.expand_dims(DEPTH_IMAGE, axis=-1)], axis=-1)
     # plt.imshow(FULL_IMAGE)
-    FIG = Utils_Display3DImage(FULL_IMAGE, invert_z=invert_z, preserve_aspect_ratio=preserve_aspect_ratio)
+    FIG = Utils_Display3DImage(
+        FULL_IMAGE, 
+        invert_z=invert_z, preserve_aspect_ratio=preserve_aspect_ratio,
+        plot_mode=plot_mode
+    )
     PLOT_FUNC(FIG)
 
 ## HF Funcs
