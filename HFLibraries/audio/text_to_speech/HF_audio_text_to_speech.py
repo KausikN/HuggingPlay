@@ -101,7 +101,9 @@ def UI_Func_DisplayOutputs(OUTPUTS, interactive_display=True, **params):
         "wave": Utils_DisplayAudioWave(AUDIO_DATA),
         "spectrogram": Utils_DisplayAudioSpectrogram(AUDIO_DATA)
     }
-    for k in FIGS.keys(): PLOT_FUNC(FIGS[k])
+    for k in FIGS.keys():
+        try: PLOT_FUNC(FIGS[k])
+        except: st.pyplot(FIGS[k])
 
 ## HF Funcs
 def HF_Func_LoadModel(model_info, **params):
