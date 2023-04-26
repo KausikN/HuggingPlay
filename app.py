@@ -172,6 +172,7 @@ def settings():
     if st.button("Save Settings"):
         CACHE["settings"] = SETTINGS
         SaveCache()
+        st.success("Settings Saved.")
 
     ## Operations
     st.markdown("## Operations")

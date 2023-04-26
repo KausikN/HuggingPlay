@@ -54,7 +54,7 @@ def Utils_DisplayAudioSpectrogram(AUDIO_DATA):
 
     # Plot
     FIG = plt.figure()
-    plt.specgram(AUDIO_DATA["samples"], Fs=AUDIO_DATA["sample_rate"])#, vmin=-20, vmax=50)
+    plt.specgram(AUDIO_DATA["samples"], Fs=AUDIO_DATA["sample_rate"])
     plt.title("Audio Spectrogram")
     plt.ylabel("Frequency (Hz)")
     plt.xlabel("Time (s)")
