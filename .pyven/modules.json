@@ -24,21 +24,100 @@
             "subDir": "",
             "dependencies": [
                 "*.py",
-                "HF_Multimodal_Text_to_Video.py"
+                "HF_text_text_classification.py",
+                "HF_image_depth_estimation.py",
+                "HF_image_depth_estimation_glpn.py",
+                "HF_audio_text_to_speech.py",
+                "HF_multimodal_text_to_video.py",
+                "HF_multimodal_text_to_video_zero_shot.py"
             ]
         },
-        "HFLibraries/Multimodal/HF_Multimodal_Text_to_Video.py": {
-            "name": "HF_Multimodal_Text_to_Video",
+        "HFLibraries/audio/text_to_speech/HF_audio_text_to_speech.py": {
+            "name": "HF_audio_text_to_speech",
             "type": "local",
-            "link": "https://github.com/KausikN/HuggingPlay/blob/master/HFLibraries/Multimodal/HF_Multimodal_Text_to_Video.py",
+            "link": "https://github.com/KausikN/HuggingPlay/blob/master/HFLibraries/audio/text_to_speech/HF_audio_text_to_speech.py",
             "parentDir": "E:/Github Codes and Projects/Projects/HuggingPlay",
-            "subDir": "HFLibraries/Multimodal",
+            "subDir": "HFLibraries/audio/text_to_speech",
             "dependencies": [
+                "soundfile.py",
+                "torch.py",
+                "*.py",
+                "load_dataset.py",
+                "SpeechT5Processor.py",
+                "SpeechT5ForTextToSpeech.py",
+                "SpeechT5HifiGan.py"
+            ]
+        },
+        "HFLibraries/image/depth_estimation/HF_image_depth_estimation.py": {
+            "name": "HF_image_depth_estimation",
+            "type": "local",
+            "link": "https://github.com/KausikN/HuggingPlay/blob/master/HFLibraries/image/depth_estimation/HF_image_depth_estimation.py",
+            "parentDir": "E:/Github Codes and Projects/Projects/HuggingPlay",
+            "subDir": "HFLibraries/image/depth_estimation",
+            "dependencies": [
+                "plotly/graph_objects.py",
+                "plotly/express.py",
+                "torch.py",
+                "*.py",
+                "Image.py",
+                "DPTImageProcessor.py",
+                "DPTForDepthEstimation.py"
+            ]
+        },
+        "HFLibraries/image/depth_estimation/HF_image_depth_estimation_glpn.py": {
+            "name": "HF_image_depth_estimation_glpn",
+            "type": "local",
+            "link": "https://github.com/KausikN/HuggingPlay/blob/master/HFLibraries/image/depth_estimation/HF_image_depth_estimation_glpn.py",
+            "parentDir": "E:/Github Codes and Projects/Projects/HuggingPlay",
+            "subDir": "HFLibraries/image/depth_estimation",
+            "dependencies": [
+                "plotly/graph_objects.py",
+                "plotly/express.py",
+                "torch.py",
+                "*.py",
+                "Image.py",
+                "GLPNFeatureExtractor.py",
+                "GLPNForDepthEstimation.py",
+                "HFLibraries/image/depth_estimation/HF_image_depth_estimation.py"
+            ]
+        },
+        "HFLibraries/multimodal/text_to_video/HF_multimodal_text_to_video.py": {
+            "name": "HF_multimodal_text_to_video",
+            "type": "local",
+            "link": "https://github.com/KausikN/HuggingPlay/blob/master/HFLibraries/multimodal/text_to_video/HF_multimodal_text_to_video.py",
+            "parentDir": "E:/Github Codes and Projects/Projects/HuggingPlay",
+            "subDir": "HFLibraries/multimodal/text_to_video",
+            "dependencies": [
+                "imageio.py",
                 "torch.py",
                 "*.py",
                 "DiffusionPipeline.py",
-                "DPMSolverMultistepScheduler.py",
-                "export_to_video.py"
+                "DPMSolverMultistepScheduler.py"
+            ]
+        },
+        "HFLibraries/multimodal/text_to_video/HF_multimodal_text_to_video_zero_shot.py": {
+            "name": "HF_multimodal_text_to_video_zero_shot",
+            "type": "local",
+            "link": "https://github.com/KausikN/HuggingPlay/blob/master/HFLibraries/multimodal/text_to_video/HF_multimodal_text_to_video_zero_shot.py",
+            "parentDir": "E:/Github Codes and Projects/Projects/HuggingPlay",
+            "subDir": "HFLibraries/multimodal/text_to_video",
+            "dependencies": [
+                "imageio.py",
+                "torch.py",
+                "*.py",
+                "TextToVideoZeroPipeline.py"
+            ]
+        },
+        "HFLibraries/text/text_classification/HF_text_text_classification.py": {
+            "name": "HF_text_text_classification",
+            "type": "local",
+            "link": "https://github.com/KausikN/HuggingPlay/blob/master/HFLibraries/text/text_classification/HF_text_text_classification.py",
+            "parentDir": "E:/Github Codes and Projects/Projects/HuggingPlay",
+            "subDir": "HFLibraries/text/text_classification",
+            "dependencies": [
+                "torch.py",
+                "*.py",
+                "AutoModelForSequenceClassification.py"
             ]
         },
         "Utils/Utils.py": {
@@ -49,32 +128,18 @@
             "subDir": "Utils",
             "dependencies": [
                 "os.py",
+                "cv2.py",
                 "json.py",
                 "pickle.py",
                 "functools.py",
                 "numpy.py",
                 "streamlit.py",
+                "matplotlib/pyplot.py",
                 "pipeline.py",
                 "AutoConfig.py",
                 "AutoTokenizer.py",
                 "file_utils.py"
             ]
-        },
-        "torch.py": {
-            "name": "torch",
-            "type": "inbuilt",
-            "link": "",
-            "parentDir": "E:/Github Codes and Projects/Projects/HuggingPlay",
-            "subDir": "",
-            "dependencies": []
-        },
-        "numpy.py": {
-            "name": "numpy",
-            "type": "missing",
-            "link": "",
-            "parentDir": "",
-            "subDir": "",
-            "dependencies": []
         },
         "streamlit.py": {
             "name": "streamlit",
@@ -84,24 +149,8 @@
             "subDir": "",
             "dependencies": []
         },
-        "json.py": {
-            "name": "json",
-            "type": "missing",
-            "link": "",
-            "parentDir": "",
-            "subDir": "",
-            "dependencies": []
-        },
-        "AutoTokenizer.py": {
-            "name": "AutoTokenizer",
-            "type": "missing",
-            "link": "",
-            "parentDir": "",
-            "subDir": "",
-            "dependencies": []
-        },
-        "pickle.py": {
-            "name": "pickle",
+        "cv2.py": {
+            "name": "cv2",
             "type": "missing",
             "link": "",
             "parentDir": "",
@@ -110,42 +159,106 @@
         },
         "AutoConfig.py": {
             "name": "AutoConfig",
-            "type": "inbuilt",
+            "type": "missing",
             "link": "",
-            "parentDir": "E:/Github Codes and Projects/Projects/HuggingPlay",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "torch.py": {
+            "name": "torch",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "GLPNFeatureExtractor.py": {
+            "name": "GLPNFeatureExtractor",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "GLPNForDepthEstimation.py": {
+            "name": "GLPNForDepthEstimation",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "TextToVideoZeroPipeline.py": {
+            "name": "TextToVideoZeroPipeline",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
             "subDir": "",
             "dependencies": []
         },
         "file_utils.py": {
             "name": "file_utils",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "plotly/express.py": {
+            "name": "express",
             "type": "inbuilt",
             "link": "",
             "parentDir": "E:/Github Codes and Projects/Projects/HuggingPlay",
-            "subDir": "",
+            "subDir": "plotly",
             "dependencies": []
         },
-        "DPMSolverMultistepScheduler.py": {
-            "name": "DPMSolverMultistepScheduler",
+        "HF_multimodal_text_to_video.py": {
+            "name": "HF_multimodal_text_to_video",
             "type": "missing",
             "link": "",
             "parentDir": "",
             "subDir": "",
             "dependencies": []
         },
-        "pipeline.py": {
-            "name": "pipeline",
+        "HF_multimodal_text_to_video_zero_shot.py": {
+            "name": "HF_multimodal_text_to_video_zero_shot",
             "type": "missing",
             "link": "",
             "parentDir": "",
             "subDir": "",
             "dependencies": []
         },
-        "os.py": {
-            "name": "os",
+        "AutoModelForSequenceClassification.py": {
+            "name": "AutoModelForSequenceClassification",
             "type": "missing",
             "link": "",
             "parentDir": "",
             "subDir": "",
+            "dependencies": []
+        },
+        "load_dataset.py": {
+            "name": "load_dataset",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "SpeechT5ForTextToSpeech.py": {
+            "name": "SpeechT5ForTextToSpeech",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "plotly/graph_objects.py": {
+            "name": "graph_objects",
+            "type": "inbuilt",
+            "link": "",
+            "parentDir": "E:/Github Codes and Projects/Projects/HuggingPlay",
+            "subDir": "plotly",
             "dependencies": []
         },
         "DiffusionPipeline.py": {
@@ -156,16 +269,24 @@
             "subDir": "",
             "dependencies": []
         },
-        "export_to_video.py": {
-            "name": "export_to_video",
+        "HF_audio_text_to_speech.py": {
+            "name": "HF_audio_text_to_speech",
             "type": "missing",
             "link": "",
             "parentDir": "",
             "subDir": "",
             "dependencies": []
         },
-        "HF_Multimodal_Text_to_Video.py": {
-            "name": "HF_Multimodal_Text_to_Video",
+        "SpeechT5HifiGan.py": {
+            "name": "SpeechT5HifiGan",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "HF_text_text_classification.py": {
+            "name": "HF_text_text_classification",
             "type": "missing",
             "link": "",
             "parentDir": "",
@@ -180,8 +301,136 @@
             "subDir": "",
             "dependencies": []
         },
+        "DPMSolverMultistepScheduler.py": {
+            "name": "DPMSolverMultistepScheduler",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "HF_image_depth_estimation.py": {
+            "name": "HF_image_depth_estimation",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "matplotlib/pyplot.py": {
+            "name": "pyplot",
+            "type": "inbuilt",
+            "link": "",
+            "parentDir": "E:/Github Codes and Projects/Projects/HuggingPlay",
+            "subDir": "matplotlib",
+            "dependencies": []
+        },
+        "AutoTokenizer.py": {
+            "name": "AutoTokenizer",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "DPTImageProcessor.py": {
+            "name": "DPTImageProcessor",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "numpy.py": {
+            "name": "numpy",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "pipeline.py": {
+            "name": "pipeline",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
         "*.py": {
             "name": "*",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "Image.py": {
+            "name": "Image",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "json.py": {
+            "name": "json",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "SpeechT5Processor.py": {
+            "name": "SpeechT5Processor",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "pickle.py": {
+            "name": "pickle",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "soundfile.py": {
+            "name": "soundfile",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "DPTForDepthEstimation.py": {
+            "name": "DPTForDepthEstimation",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "os.py": {
+            "name": "os",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "HF_image_depth_estimation_glpn.py": {
+            "name": "HF_image_depth_estimation_glpn",
+            "type": "missing",
+            "link": "",
+            "parentDir": "",
+            "subDir": "",
+            "dependencies": []
+        },
+        "imageio.py": {
+            "name": "imageio",
             "type": "missing",
             "link": "",
             "parentDir": "",
