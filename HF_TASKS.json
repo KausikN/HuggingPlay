@@ -1,0 +1,74 @@
+{
+    "task_types": {
+        "audio": {
+            "name": "Audio",
+            "tasks": {
+                "text_to_speech": {
+                    "name": "Text-to-Speech",
+                    "pipelines": {
+                        "default": {
+                            "name": "SpeechT5"
+                        }
+                    }
+                }
+            }
+        },
+        "image": {
+            "name": "Computer Vision",
+            "tasks": {
+                "depth_estimation": {
+                    "name": "Depth Estimation",
+                    "pipelines": {
+                        "default": {
+                            "name": "DPT"
+                        },
+                        "glpn": {
+                            "name": "GLPN"
+                        }
+                    }
+                }
+            }
+        },
+        "multimodal": {
+            "name": "Multimodal",
+            "tasks": {
+                "text_to_video": {
+                    "name": "Text-to-Video",
+                    "pipelines": {
+                        "default": {
+                            "name": "Diffusion + DPMSolverMultistepScheduler"
+                        },
+                        "zero_shot": {
+                            "name": "Text to Video Zero Shot"
+                        }
+                    }
+                }
+            }
+        },
+        "text": {
+            "name": "Text",
+            "tasks": {
+                "text_classification": {
+                    "name": "Text Classification",
+                    "pipelines": {
+                        "default": {
+                            "name": "Transformers Sequence Classification"
+                        }
+                    }
+                }
+            }
+        },
+        "tabular": {
+            "name": "Tabular",
+            "tasks": {
+                
+            }
+        },
+        "reinforcement_learning": {
+            "name": "Reinforcement Learning",
+            "tasks": {
+                
+            }
+        }
+    }
+}

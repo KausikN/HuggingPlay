@@ -1,0 +1,14 @@
+{
+    "task_type": "Text",
+    "task": "Token Classification",
+    "models": {
+        "Davlan/distilbert-base-multilingual-cased-ner-hrl": {
+            "pipeline": "default",
+            "params": {
+                "tokenizer": {
+                    "return_tensors": "pt"
+                }
+            }
+        }
+    }
+}

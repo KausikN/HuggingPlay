@@ -6,6 +6,7 @@ Set of tools for running and visualizing huggingface models for various tasks
 from Utils.Utils import *
 ## Text
 from HFLibraries.text.text_classification import HF_text_text_classification
+from HFLibraries.text.token_classification import HF_text_token_classification
 ## Image
 from HFLibraries.image.depth_estimation import HF_image_depth_estimation
 from HFLibraries.image.depth_estimation import HF_image_depth_estimation_glpn
@@ -57,6 +58,12 @@ TASKS = HuggingPlayUtils_LoadModelsInfo({
         "Text Classification": {
             "default": {
                 "module": HF_text_text_classification,
+                "models": {}
+            }
+        },
+        "Token Classification": {
+            "default": {
+                "module": HF_text_token_classification,
                 "models": {}
             }
         }
