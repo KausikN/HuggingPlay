@@ -17,10 +17,10 @@ from spacy.tokens.span import Span as spacy_span
 ## Import Vars
 AutoModel = AutoModelForTokenClassification
 try:
+    os.system("python -m spacy download en_core_web_sm")
     NLP = spacy.load("en_core_web_sm")
 except Exception as e:
     print(e)
-    os.system("python -m spacy download en_core_web_sm")
     import en_core_web_sm
     NLP = en_core_web_sm.load()
 
