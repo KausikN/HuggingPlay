@@ -68,7 +68,7 @@ def UI_Func_DisplayOutputs(OUTPUTS, **params):
     OUTPUT_PARAMS = OUTPUTS["params"]
     # Save Outputs
     # Display Outputs
-    RENDER_HTML = Utils_DisplayTokenClassification(OUTPUTS["text"], OUTPUTS["tags"], **OUTPUT_PARAMS, **params)
+    RENDER_HTML = Utils_DisplayTokenClassification(OUTPUTS["tokens"], OUTPUTS["tags"], **OUTPUT_PARAMS, **params)
     st.write(RENDER_HTML, unsafe_allow_html=True)
 
 ## HF Funcs
