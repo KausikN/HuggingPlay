@@ -28,10 +28,8 @@ def Utils_DisplayTokenClassification(tokens, tags, ignore_tags=[], jupyter=False
     '''
     Utils - Display Token Classification
     '''
-    # Using Tokens
-    text = " ".join(tokens)
     # Generate HTML
-    CurDoc = NLP(text)
+    CurDoc = spacy.tokens.Doc(NLP.vocab, words=tokens)
     Ents = []
     for i in range(len(tags)):
         tag = tags[i]
