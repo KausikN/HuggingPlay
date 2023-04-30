@@ -7,6 +7,9 @@
             "params": {
                 "tokenizer": {
                     "return_tensors": "pt"
+                },
+                "output": {
+                    "ignore_tags": ["O"]
                 }
             }
         }

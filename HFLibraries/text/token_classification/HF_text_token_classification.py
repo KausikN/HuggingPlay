@@ -24,14 +24,16 @@ except:
 
 # Main Functions
 ## Utils Functions
-def Utils_DisplayTokenClassification(text, tags, **params):
+def Utils_DisplayTokenClassification(text, tags, ignore_tags=[], **params):
     '''
     Utils - Display Token Classification
     '''
     CurDoc = NLP(text)
     Ents = []
     for i in range(len(tags)):
-        Ents.append(spacy_span(CurDoc, i, i+1, tags[i]))
+        tag = tags[i]
+        if tag not in ignore_tags:
+            Ents.append(spacy_span(CurDoc, i, i+1, tag))
     CurDoc.set_ents(Ents)
     RENDER_HTML = displacy.render(CurDoc, style="ent", minify=True)
 
@@ -55,15 +57,15 @@ def UI_Func_LoadInputs(**params):
 
     return USERINPUT_Inputs
 
-def UI_Func_DisplayOutputs(OUTPUTS, interactive_display=True, **params):
+def UI_Func_DisplayOutputs(OUTPUTS, **params):
     '''
     UI - Display Outputs
     '''
     # Init
-    PLOT_FUNC = st.plotly_chart if interactive_display else st.pyplot
+    OUTPUT_PARAMS = OUTPUTS["params"]
     # Save Outputs
     # Display Outputs
-    RENDER_HTML = Utils_DisplayTokenClassification(OUTPUTS["text"], OUTPUTS["tags"], **params)
+    RENDER_HTML = Utils_DisplayTokenClassification(OUTPUTS["text"], OUTPUTS["tags"], **OUTPUT_PARAMS, **params)
     st.write(RENDER_HTML, unsafe_allow_html=True)
 
 ## HF Funcs
@@ -78,7 +80,8 @@ def HF_Func_LoadModel(model_info, **params):
         "hf_data": model_info["data"],
         "hf_params": {
             "tokenizer": {},
-            "model": {}
+            "model": {},
+            "output": {}
         },
         "config": None,
         "tokenizer": None,
@@ -112,7 +115,7 @@ def HF_Func_RunModel(MODEL_DATA, inputs, **params):
     # Run Model
     MODEL_INPUTS = TOKENIZER.batch_encode_plus([inputs["text"]], **MODEL_DATA["hf_params"]["tokenizer"])
     OUTPUTS = MODEL(**MODEL_INPUTS, **MODEL_DATA["hf_params"]["model"])
-    PROB_DIST = OUTPUTS.logits.cpu().detach().numpy()[0]
+    PROB_DIST = OUTPUTS.logits.cpu().detach().numpy()[0][1:-1]
     TAGS_CLASS_INDEX = np.argmax(PROB_DIST, axis=-1)
     TAGS = [CLASSES[i] for i in TAGS_CLASS_INDEX] if CLASSES is not None else [f"Class_{i}" for i in TAGS_CLASS_INDEX]
     # Form Outputs
@@ -121,7 +124,8 @@ def HF_Func_RunModel(MODEL_DATA, inputs, **params):
         "classes": CLASSES,
         "prob_dist": PROB_DIST,
         "tags_class_index": TAGS_CLASS_INDEX,
-        "tags": TAGS
+        "tags": TAGS,
+        "params": MODEL_DATA["hf_params"]["output"]
     }
 
     return OUTPUTS
