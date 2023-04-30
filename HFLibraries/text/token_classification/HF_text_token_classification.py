@@ -24,7 +24,7 @@ except:
 
 # Main Functions
 ## Utils Functions
-def Utils_DisplayTokenClassification(tokens, tags, ignore_tags=[], **params):
+def Utils_DisplayTokenClassification(tokens, tags, ignore_tags=[], jupyter=False, **params):
     '''
     Utils - Display Token Classification
     '''
@@ -38,7 +38,7 @@ def Utils_DisplayTokenClassification(tokens, tags, ignore_tags=[], **params):
         if tag not in ignore_tags:
             Ents.append(spacy_span(CurDoc, i, i+1, tag))
     CurDoc.set_ents(Ents)
-    RENDER_HTML = displacy.render(CurDoc, style="ent", minify=True)
+    RENDER_HTML = displacy.render(CurDoc, style="ent", minify=True, jupyter=jupyter)
 
     return RENDER_HTML
 
