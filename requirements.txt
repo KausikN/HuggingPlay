@@ -5,6 +5,7 @@ plotly
 
 soundfile
 imageio
+spacy
 
 transformers
 datasets
