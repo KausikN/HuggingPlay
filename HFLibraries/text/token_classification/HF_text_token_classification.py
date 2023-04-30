@@ -24,10 +24,13 @@ except:
 
 # Main Functions
 ## Utils Functions
-def Utils_DisplayTokenClassification(text, tags, ignore_tags=[], **params):
+def Utils_DisplayTokenClassification(tokens, tags, ignore_tags=[], **params):
     '''
     Utils - Display Token Classification
     '''
+    # Using Tokens
+    text = " ".join(tokens)
+    # Generate HTML
     CurDoc = NLP(text)
     Ents = []
     for i in range(len(tags)):
@@ -118,6 +121,7 @@ def HF_Func_RunModel(MODEL_DATA, inputs, **params):
     PROB_DIST = OUTPUTS.logits.cpu().detach().numpy()[0][1:-1]
     TAGS_CLASS_INDEX = np.argmax(PROB_DIST, axis=-1)
     TAGS = [CLASSES[i] for i in TAGS_CLASS_INDEX] if CLASSES is not None else [f"Class_{i}" for i in TAGS_CLASS_INDEX]
+    TOKENS = TOKENIZER.convert_ids_to_tokens(MODEL_INPUTS["input_ids"][0])[1:-1]
     # Form Outputs
     OUTPUTS = {
         "text": inputs["text"],
@@ -125,6 +129,7 @@ def HF_Func_RunModel(MODEL_DATA, inputs, **params):
         "prob_dist": PROB_DIST,
         "tags_class_index": TAGS_CLASS_INDEX,
         "tags": TAGS,
+        "tokens": TOKENS,
         "params": MODEL_DATA["hf_params"]["output"]
     }
 
