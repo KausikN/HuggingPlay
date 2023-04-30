@@ -55,6 +55,14 @@
                             "name": "Transformers Sequence Classification"
                         }
                     }
+                },
+                "token_classification": {
+                    "name": "Token Classification",
+                    "pipelines": {
+                        "default": {
+                            "name": "Transformers Token Classification"
+                        }
+                    }
                 }
             }
         },
