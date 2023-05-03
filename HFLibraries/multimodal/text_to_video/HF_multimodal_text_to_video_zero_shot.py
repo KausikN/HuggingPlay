@@ -47,8 +47,7 @@ def UI_Func_DisplayOutputs(OUTPUTS, **params):
     VIDEO_SAVE_PATH = os.path.join(UTILS_PATHS["temp"], "HF_multimodal_text_to_video.mp4")
     # Save Outputs
     imageio.mimsave(
-        VIDEO_SAVE_PATH, 
-        [(f * 255).astype("uint8") for f in VIDEO_FRAMES], 
+        VIDEO_SAVE_PATH, VIDEO_FRAMES, 
         fps=16
     )
     # Display Outputs
@@ -92,8 +91,10 @@ def HF_Func_RunModel(MODEL_DATA, inputs, **params):
     OUTPUT_PARAMS = MODEL_DATA["hf_output_params"]
     # Run Model
     OUTPUTS_DATA = PIPE(**inputs)
+    FRAMES = OUTPUTS_DATA.__dict__[OUTPUT_PARAMS["output_key"]]
+    FRAMES = [(f * 255).astype("uint8") for f in FRAMES]
     OUTPUTS = {
-        "video_frames": OUTPUTS_DATA.__dict__[OUTPUT_PARAMS["output_key"]],
+        "video_frames": FRAMES,
         **{k: OUTPUTS_DATA.__dict__[k] for k in OUTPUTS_DATA.__dict__.keys() if k != OUTPUT_PARAMS["output_key"]}
     }
 
