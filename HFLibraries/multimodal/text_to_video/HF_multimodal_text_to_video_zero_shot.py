@@ -34,7 +34,7 @@ def UI_Func_LoadInputs(**params):
     ## N Inference Steps and N Frames
     cols = st.columns(2)
     USERINPUT_Inputs["num_inference_steps"] = cols[0].number_input("N Inference Steps", min_value=1, value=50, step=1)
-    USERINPUT_Inputs["video_length"] = cols[1].number_input("N Frames", min_value=1, value=8, step=1)
+    USERINPUT_Inputs["num_frames"] = cols[1].number_input("N Frames", min_value=1, value=8, step=1)
 
     return USERINPUT_Inputs
 
@@ -89,6 +89,8 @@ def HF_Func_RunModel(MODEL_DATA, inputs, **params):
     # Init
     PIPE = MODEL_DATA["pipe"]
     OUTPUT_PARAMS = MODEL_DATA["hf_output_params"]
+    # Fix Input Keys
+    inputs["video_length"] = inputs.pop("num_frames")
     # Run Model
     OUTPUTS_DATA = PIPE(**inputs)
     FRAMES = OUTPUTS_DATA.__dict__[OUTPUT_PARAMS["output_key"]]
