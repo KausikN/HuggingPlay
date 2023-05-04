@@ -84,6 +84,8 @@ def HF_Func_LoadModel(model_info, **params):
     '''
     HF - Load Model
     '''
+    # Device
+    DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     # Init
     HF_ID = model_info["hf_id"]
     MODEL_DATA = {
@@ -101,9 +103,11 @@ def HF_Func_LoadModel(model_info, **params):
     # Load Model
     MODEL_DATA["pipe"] = DiffusionPipeline.from_pretrained(
         HF_ID, 
-        torch_dtype=torch.float16, 
+        # torch_dtype=torch.float16, 
         **MODEL_DATA["hf_params"]
     )
+    ## To Device
+    MODEL_DATA["pipe"] = MODEL_DATA["pipe"].to(DEVICE)
     
     return MODEL_DATA
 
