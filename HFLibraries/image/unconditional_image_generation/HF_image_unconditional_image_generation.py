@@ -39,26 +39,31 @@ def UI_Func_LoadInputs(**params):
     USERINPUT_Inputs = {}
     # Ask Inputs
     ## Image
-    USERINPUT_Inputs["image"] = st.file_uploader("Input Image", type=["png", "jpg", "jpeg"])
-    if USERINPUT_Inputs["image"] is not None:
-        ## Process Image
-        ImageData = USERINPUT_Inputs["image"].read()
-        ImageData = cv2.imdecode(np.frombuffer(ImageData, np.uint8), cv2.IMREAD_COLOR)
-        USERINPUT_Inputs["image"] = cv2.cvtColor(ImageData, cv2.COLOR_BGR2RGB)
-        ## Display Input Image
-        st.image(USERINPUT_Inputs["image"], caption="Input Image", use_column_width=True)
-        ## Convert to PIL Image
-        USERINPUT_Inputs["image"] = Image.fromarray(USERINPUT_Inputs["image"])
+    cols = st.columns((1, 4))
+    if cols[0].checkbox("Image"):
+        USERINPUT_Inputs["image"] = cols[1].file_uploader("Input Image", type=["png", "jpg", "jpeg"])
+        if USERINPUT_Inputs["image"] is not None:
+            ## Process Image
+            ImageData = USERINPUT_Inputs["image"].read()
+            ImageData = cv2.imdecode(np.frombuffer(ImageData, np.uint8), cv2.IMREAD_COLOR)
+            USERINPUT_Inputs["image"] = cv2.cvtColor(ImageData, cv2.COLOR_BGR2RGB)
+            ## Display Input Image
+            st.image(USERINPUT_Inputs["image"], caption="Input Image", use_column_width=True)
+            ## Convert to PIL Image
+            USERINPUT_Inputs["image"] = Image.fromarray(USERINPUT_Inputs["image"])
     ## Prompt
-    USERINPUT_Inputs["prompt"] = st.text_input("Prompt", value="A beautiful landscape.")
-    ## N Inference Steps and Strength
-    cols = st.columns(2)
+    cols = st.columns((1, 4))
+    if cols[0].checkbox("Prompt"):
+        USERINPUT_Inputs["prompt"] = cols[1].text_input("Prompt", value="A beautiful landscape.")
+    ## N Inference Steps and Strength and N Images
+    cols = st.columns(3)
     USERINPUT_Inputs["num_inference_steps"] = cols[0].number_input("N Inference Steps", min_value=1, value=50, step=1)
     USERINPUT_Inputs["strength"] = cols[1].number_input("Strength", min_value=0.0, max_value=1.0, value=0.8)
-    ## N Images and Seed
-    cols = st.columns(2)
-    USERINPUT_Inputs["num_images_per_prompt"] = cols[0].number_input("N Images", min_value=1, value=1, step=1)
-    USERINPUT_Inputs["generator"] = torch.Generator().manual_seed(cols[1].number_input("Seed", value=0, step=1))
+    USERINPUT_Inputs["num_images_per_prompt"] = cols[2].number_input("N Images", min_value=1, value=1, step=1)
+    ## Seed
+    cols = st.columns((1, 4))
+    if cols[0].checkbox("Seed"):
+        USERINPUT_Inputs["generator"] = torch.Generator().manual_seed(cols[1].number_input("Seed", value=0, step=1))
     ## Negative Prompt and Guidance Scale
     cols = st.columns((1, 4))
     if cols[0].checkbox("Negative Prompt"):
