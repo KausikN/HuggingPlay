@@ -104,7 +104,6 @@ def HF_Func_LoadModel(model_info, **params):
         torch_dtype=torch.float16, 
         **MODEL_DATA["hf_params"]
     )
-    MODEL_DATA["pipe"]()
     
     return MODEL_DATA
 
