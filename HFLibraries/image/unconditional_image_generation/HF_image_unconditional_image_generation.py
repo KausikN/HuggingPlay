@@ -47,6 +47,8 @@ def UI_Func_LoadInputs(**params):
         USERINPUT_Inputs["image"] = cv2.cvtColor(ImageData, cv2.COLOR_BGR2RGB)
         ## Display Input Image
         st.image(USERINPUT_Inputs["image"], caption="Input Image", use_column_width=True)
+        ## Convert to PIL Image
+        USERINPUT_Inputs["image"] = Image.fromarray(USERINPUT_Inputs["image"])
     ## Prompt
     USERINPUT_Inputs["prompt"] = st.text_input("Prompt", value="A beautiful landscape.")
     ## N Inference Steps and Strength
@@ -74,7 +76,7 @@ def UI_Func_DisplayOutputs(OUTPUTS, **params):
     IMAGES_SAVE_PATH = os.path.join(UTILS_PATHS["temp"], "HF_image_unconditional_image_generation_{}.png")
     # Save Outputs
     for i in range(len(IMAGES)):
-        cv2.imwrite(IMAGES_SAVE_PATH.format(i), cv2.cvtColor(IMAGES[i], cv2.COLOR_RGB2BGR))
+        cv2.imwrite(IMAGES_SAVE_PATH.format(i+1), cv2.cvtColor(IMAGES[i], cv2.COLOR_RGB2BGR))
     # Display Outputs
     for i in range(len(IMAGES)):
         st.image(IMAGES[i], caption=f"Generated Image {i+1}", use_column_width=True)
