@@ -1,0 +1,35 @@
+{
+    "task_type": "Image",
+    "task": "Unconditional Image Generation",
+    "models": {
+        "CompVis/ldm-celebahq-256": {
+            "pipeline": "default",
+            "params": {
+                "variant": "memory efficient attention"
+            }
+        },
+        "google/ncsnpp-celebahq-256": {
+            "pipeline": "default",
+            "params": {
+                "variant": "memory efficient attention"
+            }
+        },
+
+        "google/ddpm-cat-256": {
+            "pipeline": "DDPM",
+            "params": {}
+        },
+        "google/ddpm-celebahq-256": {
+            "pipeline": "DDPM",
+            "params": {}
+        },
+        "google/ddpm-ema-celebahq-256": {
+            "pipeline": "DDPM",
+            "params": {}
+        },
+        "google/ddpm-cifar10-32": {
+            "pipeline": "DDPM",
+            "params": {}
+        }
+    }
+}

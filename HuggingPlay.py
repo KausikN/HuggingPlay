@@ -10,6 +10,7 @@ from HFLibraries.text.token_classification import HF_text_token_classification
 ## Image
 from HFLibraries.image.depth_estimation import HF_image_depth_estimation
 from HFLibraries.image.depth_estimation import HF_image_depth_estimation_glpn
+from HFLibraries.image.unconditional_image_generation import HF_image_unconditional_image_generation
 ## Audio
 from HFLibraries.audio.text_to_speech import HF_audio_text_to_speech
 ## Multimodal
@@ -76,6 +77,16 @@ TASKS = HuggingPlayUtils_LoadModelsInfo({
             },
             "GLPN": {
                 "module": HF_image_depth_estimation_glpn,
+                "models": {}
+            }
+        },
+        "Unconditional Image Generation": {
+            "default": {
+                "module": HF_image_unconditional_image_generation,
+                "models": {}
+            },
+            "DDPM": {
+                "module": None,
                 "models": {}
             }
         },

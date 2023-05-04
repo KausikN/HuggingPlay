@@ -96,7 +96,7 @@ def UI_Func_LoadInputs(**params):
         }
     }
     # Ask Inputs
-    ## Prompt
+    ## Image
     USERINPUT_Inputs["processor"]["image"] = st.file_uploader("Input Image", type=["png", "jpg", "jpeg"])
     if USERINPUT_Inputs["processor"]["image"] is None:
         st.error("No image provided.")

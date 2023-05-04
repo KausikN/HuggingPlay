@@ -22,11 +22,11 @@ def UI_Func_LoadInputs(**params):
     USERINPUT_Inputs = {}
     # Ask Inputs
     ## Prompt
-    USERINPUT_Inputs["prompt"] = st.text_input("Enter Prompt").strip()
+    USERINPUT_Inputs["prompt"] = st.text_area("Enter Prompt").strip()
     if USERINPUT_Inputs["prompt"] == "":
         st.error("Invalid Prompt.")
         st.stop()
-    # Height and Width
+    ## Height and Width
     cols = st.columns(2)
     USERINPUT_Inputs["height"] = cols[0].number_input("Enter Height", min_value=8, max_value=1024, value=256, step=8)
     USERINPUT_Inputs["width"] = cols[1].number_input("Enter Width", min_value=8, max_value=1024, value=256, step=8)
@@ -34,6 +34,11 @@ def UI_Func_LoadInputs(**params):
     cols = st.columns(2)
     USERINPUT_Inputs["num_inference_steps"] = cols[0].number_input("N Inference Steps", min_value=1, value=50, step=1)
     USERINPUT_Inputs["num_frames"] = cols[1].number_input("N Frames", min_value=1, value=8, step=1)
+    ## Negative Prompt and Guidance Scale
+    cols = st.columns((1, 4))
+    if cols[0].checkbox("Negative Prompt"):
+        USERINPUT_Inputs["negative_prompt"] = cols[1].text_area("Enter Negative Prompt").strip()
+        USERINPUT_Inputs["guidance_scale"] = st.number_input("Guidance Scale", min_value=0.0, value=8.0, step=0.1)
 
     return USERINPUT_Inputs
 

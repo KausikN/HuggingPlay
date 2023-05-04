@@ -27,7 +27,7 @@ def UI_Func_LoadInputs(**params):
     if USERINPUT_Inputs["prompt"] == "":
         st.error("Invalid Prompt.")
         st.stop()
-    # Height and Width
+    ## Height and Width
     cols = st.columns(2)
     USERINPUT_Inputs["height"] = cols[0].number_input("Enter Height", min_value=8, max_value=1024, value=256, step=8)
     USERINPUT_Inputs["width"] = cols[1].number_input("Enter Width", min_value=8, max_value=1024, value=256, step=8)
