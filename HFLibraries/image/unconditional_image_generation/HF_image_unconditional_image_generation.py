@@ -90,7 +90,7 @@ def HF_Func_LoadModel(model_info, **params):
         "hf_id": HF_ID,
         "hf_data": model_info["data"],
         "hf_params": {},
-        "pipeline": None
+        "pipe": None
     }
     # Load Params
     if "params" in model_info["data"].keys():
