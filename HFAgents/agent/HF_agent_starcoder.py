@@ -31,7 +31,10 @@ def UI_Func_LoadInputs(**params):
     ## Return Code
     USERINPUT_Inputs["return_code"] = st.checkbox("Only Return Code", value=False)
     ## Task
-    USERINPUT_Inputs["task"] = st.text_area("Enter Task", height=300).strip()
+    USERINPUT_Inputs["task"] = st.text_area(
+        "Enter Task", value="Generate an image of a cat.",
+        height=300
+    ).strip()
     if USERINPUT_Inputs["task"] == "":
         st.error("Task is empty.")
         st.stop()
