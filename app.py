@@ -216,8 +216,19 @@ def settings():
     st.markdown("## Plots Settings")
     ### Interactive Plots
     SETTINGS["interactive_display"] = st.checkbox("Interactive Display", value=SETTINGS["interactive_display"])
+    ### HF Cache Path
+    st.markdown("## HF Cache Settings")
+    cols = st.columns(2)
+    USERINPUT_HFCacheInputType = cols[0].selectbox("HF Cache Input Type", ["Custom", "Default", "Local"])
+    if USERINPUT_HFCacheInputType == "Custom":
+        SETTINGS["hf_cache_path"] = cols[1].text_input("Enter HF Cache Path", value=SETTINGS["hf_cache_path"])
+    else:
+        SETTINGS["hf_cache_path"] = HF_CACHE_PATHS[USERINPUT_HFCacheInputType.lower()]
     # Save Inputs
     if st.button("Save Settings"):
+        ## Set HF Cache Path
+        set_hf_cache_path(SETTINGS["hf_cache_path"])
+        ## Save
         CACHE["settings"] = SETTINGS
         SaveCache()
         st.success("Settings Saved.")
@@ -226,13 +237,9 @@ def settings():
     st.markdown("## Operations")
     ### Clear HF Cache
     if st.button("Clear HF Cache"):
-        os.system(f"rm -rf {HF_CACHE_PATH}")
-        os.makedirs(HF_CACHE_PATH, exist_ok=True)
-        st.success("Hugging-Face Cache Cleared.")
-    ### Set Local HF Cache Path
-    HF_CACHE_KEY = "default" if st.checkbox("Default HF Cache Path") else "local"
-    for k in CACHE["hf_cache_env_vars"].keys(): os.environ[k] = CACHE["hf_cache_env_vars"][k][HF_CACHE_KEY]
-        
+        os.system(f"rm -rf {HF_CACHE_PATHS['current']}")
+        os.makedirs(HF_CACHE_PATHS["current"], exist_ok=True)
+        st.success("Hugging-Face Cache Cleared.")        
 
 #############################################################################################################################
 # Driver Code

@@ -24,16 +24,17 @@ def UI_Func_LoadInputs(**params):
     '''
     # Init
     USERINPUT_Inputs = {
-        "task": ""
+        "task": "",
+        "return_code": False
     }
     # Ask Inputs
+    ## Return Code
+    USERINPUT_Inputs["return_code"] = st.checkbox("Only Return Code", value=True)
     ## Task
     USERINPUT_Inputs["task"] = st.text_area("Enter Task", height=300).strip()
     if USERINPUT_Inputs["task"] == "":
         st.error("Task is empty.")
         st.stop()
-    ## Return Code
-    USERINPUT_Inputs["return_code"] = st.checkbox("Return Code", value=True)
 
     return USERINPUT_Inputs
 
