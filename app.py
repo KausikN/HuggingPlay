@@ -116,6 +116,7 @@ def UI_LoadAgent(USERINPUT_AgentType):
     if USERINPUT_AgentType == "OpenAI":
         USERINPUT_AgentInfo["token"] = st.text_input("Enter OpenAI API Key").strip()
     else:
+        st.markdown("[Get HF Token](https://huggingface.co/settings/tokens)")
         USERINPUT_AgentInfo["token"] = st.text_input("Enter HF Token").strip()
 
     return USERINPUT_AgentInfo
