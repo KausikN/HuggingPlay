@@ -56,7 +56,7 @@ def HF_Func_LoadAgent(model_info, **params):
     # Load Agent
     MODEL_DATA["agent"] = HfAgent(
         URL_ENDPOINT, 
-        cache_dir=MODEL_DATA["hf_params"]["cache_dir"],
+        # cache_dir=MODEL_DATA["hf_params"]["cache_dir"],
         **MODEL_DATA["params"]["agent"]
     )
     
