@@ -41,9 +41,7 @@ def HF_Func_LoadAgent(model_info, **params):
         "token": OPENAI_TOKEN,
         "hf_data": model_info["data"],
         "hf_params": {
-            "agent": {
-                "additional_tools": []
-            }
+            "agent": {}
         },
         "agent": None
     }
