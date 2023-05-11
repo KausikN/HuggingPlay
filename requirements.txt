@@ -10,7 +10,7 @@ en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_
 
 transformers==4.29.0
 datasets
-huggingface_hub
+huggingface_hub>=0.14.1
 
 accelerate
 diffusers

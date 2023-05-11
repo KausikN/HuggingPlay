@@ -118,13 +118,13 @@ TASKS = HuggingPlayUtils_LoadModelsInfo({
 })
 ## Agent Vars
 AGENTS = {
-    "starcoder": {
+    "StarCoder": {
         "module": HF_agent_starcoder
     },
-    "openassistant": {
+    "OpenAssistant": {
         "module": HF_agent_openassistant
     },
-    "openai": {
+    "OpenAI": {
         "module": HF_agent_openai
     }
 }
