@@ -233,7 +233,7 @@ def settings():
     st.markdown("## Operations")
     ### Set HF Cache Path
     st.markdown("### HF Cache Settings")
-    st.markdown("Current HF Cache Path: ```" + HF_SETTINGS["hf_cache_path"])
+    st.markdown("Current HF Cache Path: ```\n" + HF_SETTINGS["hf_cache_path"] + "```")
     cols = st.columns(2)
     USERINPUT_HFCacheInputType = cols[0].selectbox("HF Cache Input Type", ["Custom", "Default", "Local"])
     if USERINPUT_HFCacheInputType == "Custom":
