@@ -1,7 +1,7 @@
 """
 HuggingFace - Agent - OpenAssistant
 
-Ref: 
+Ref: https://huggingface.co/docs/transformers/transformers_agents
 """
 
 # Imports

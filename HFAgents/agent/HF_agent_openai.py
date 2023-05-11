@@ -1,7 +1,7 @@
 """
 HuggingFace - Agent - OpenAI
 
-Ref: 
+Ref: https://huggingface.co/docs/transformers/transformers_agents
 """
 
 # Imports
