@@ -110,7 +110,11 @@ def UI_LoadAgent(USERINPUT_AgentType):
     # Init
     USERINPUT_AgentInfo = {
         "token": "",
-        "data": {}
+        "data": {
+            "params": {
+                "model": {}
+            }
+        }
     }
     # Enter Token
     if USERINPUT_AgentType == "OpenAI":
@@ -118,6 +122,10 @@ def UI_LoadAgent(USERINPUT_AgentType):
     else:
         st.markdown("[Get HF Token](https://huggingface.co/settings/tokens)")
         USERINPUT_AgentInfo["token"] = st.text_input("Enter HF Token").strip()
+    ## Set HF Cache Path
+    USERINPUT_AgentInfo["data"]["hf_params"] = {
+        "cache_dir": CACHE["hf_settings"]["hf_cache_path"]
+    }
 
     return USERINPUT_AgentInfo
 
