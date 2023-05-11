@@ -98,6 +98,24 @@ def UI_LoadModel(TASK_DATA):
 
     return USERINPUT_ModelInfo
 
+def UI_LoadAgent(USERINPUT_AgentType):
+    '''
+    UI - Load Agent
+    '''
+    st.markdown("## Load Agent")
+    # Init
+    USERINPUT_AgentInfo = {
+        "token": "",
+        "data": {}
+    }
+    # Enter Token
+    if USERINPUT_AgentType == "OpenAI":
+        USERINPUT_AgentInfo["token"] = st.text_input("Enter OpenAI API Key").strip()
+    else:
+        USERINPUT_AgentInfo["token"] = st.text_input("Enter HF Token").strip()
+
+    return USERINPUT_AgentInfo
+
 def UI_LoadInputs(TASK_DATA):
     '''
     UI - Load Inputs
@@ -153,6 +171,36 @@ def run_models():
     st.markdown("## Outputs")
     MODULE.UI_FUNCS["display_outputs"](OUTPUTS, **CACHE["settings"])
 
+def run_agent():
+    # Title
+    st.header("HuggingPlay - Agent")
+
+    # Prereq Loaders
+    LoadCache()
+
+    # Load Inputs
+    ## Load Agent
+    USERINPUT_AgentType = st.sidebar.selectbox("Agent Type", AGENTS.keys())
+    AGENT_DATA = AGENTS[USERINPUT_AgentType]
+    USERINPUT_AgentInfo = UI_LoadAgent(USERINPUT_AgentType)
+    ## Load Inputs
+    USERINPUT_Inputs = UI_LoadInputs(AGENT_DATA)
+
+    # Process Check
+    USERINPUT_Process = st.checkbox("Stream Process", value=False)
+    if not USERINPUT_Process: USERINPUT_Process = st.button("Process")
+    if not USERINPUT_Process: st.stop()
+    # Process Inputs
+    MODULE = AGENT_DATA["module"]
+    ## Load Model
+    MODEL_DATA = MODULE.HF_FUNCS["load_agent"](USERINPUT_AgentInfo)
+    ## Run Model using Inputs
+    OUTPUTS = MODULE.HF_FUNCS["run_agent"](MODEL_DATA, USERINPUT_Inputs["inputs"])
+
+    # Display Outputs
+    st.markdown("## Outputs")
+    MODULE.UI_FUNCS["display_outputs"](OUTPUTS, **CACHE["settings"])
+
 def settings():
     global CACHE
     # Title
@@ -181,6 +229,10 @@ def settings():
         os.system(f"rm -rf {HF_CACHE_PATH}")
         os.makedirs(HF_CACHE_PATH, exist_ok=True)
         st.success("Hugging-Face Cache Cleared.")
+    ### Set Local HF Cache Path
+    HF_CACHE_KEY = "default" if st.checkbox("Default HF Cache Path") else "local"
+    for k in CACHE["hf_cache_env_vars"].keys(): os.environ[k] = CACHE["hf_cache_env_vars"][k][HF_CACHE_KEY]
+        
 
 #############################################################################################################################
 # Driver Code

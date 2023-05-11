@@ -6,5 +6,5 @@
 
     "PROJECT_README": "README.md",
 
-    "PROJECT_MODES": ["Run Models", "Settings"]
+    "PROJECT_MODES": ["Run Models", "Run Agent", "Settings"]
 }

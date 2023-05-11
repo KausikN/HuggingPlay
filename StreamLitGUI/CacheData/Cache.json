@@ -1,4 +1,14 @@
 {
+    "hf_cache_env_vars": {
+        "HF_HOME": {
+            "default": "~/.cache/huggingface",
+            "local": "Data/_hf/cache/"
+        },
+        "TRANSFORMERS_CACHE": {
+            "default": "~/.cache/huggingface",
+            "local": "Data/_hf/cache/"
+        }
+    },
     "settings": {
         "interactive_display": true
     }
