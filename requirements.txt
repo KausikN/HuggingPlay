@@ -8,9 +8,11 @@ imageio
 spacy
 en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.2.0/en_core_web_sm-3.2.0.tar.gz
 
-transformers==4.29.0
-datasets
 huggingface_hub>=0.14.1
+transformers @ git+https://github.com/huggingface/transformers@v4.29.0 
+openai
+datasets
+torch
 
 accelerate
 diffusers
