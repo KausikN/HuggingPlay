@@ -29,7 +29,7 @@ def UI_Func_LoadInputs(**params):
     }
     # Ask Inputs
     ## Return Code
-    USERINPUT_Inputs["return_code"] = st.checkbox("Only Return Code", value=True)
+    USERINPUT_Inputs["return_code"] = st.checkbox("Only Return Code", value=False)
     ## Task
     USERINPUT_Inputs["task"] = st.text_area("Enter Task", height=300).strip()
     if USERINPUT_Inputs["task"] == "":
@@ -56,24 +56,23 @@ def HF_Func_LoadAgent(model_info, **params):
     HF_TOKEN = model_info["token"]
     MODEL_DATA = {
         "token": HF_TOKEN,
-        "hf_data": model_info["data"],
         "hf_params": {
+            "cache_dir": HF_CACHE_PATHS["default"]
+        },
+        "params": {
             "agent": {}
         },
         "agent": None
     }
     # Load Params
-    if "params" in model_info["data"].keys():
-        for k in MODEL_DATA["hf_params"].keys():
-            if k in model_info["data"]["params"].keys():
-                for pk in model_info["data"]["params"][k].keys():
-                    MODEL_DATA["hf_params"][k][pk] = model_info["data"]["params"][k][pk]
+    MODEL_DATA = safe_update_model_data_dict(MODEL_DATA, model_info)
     # Login to HuggingFace Hub
     if HF_TOKEN is not None: login(HF_TOKEN)
     # Load Agent
     MODEL_DATA["agent"] = HfAgent(
         URL_ENDPOINT, 
-        **MODEL_DATA["hf_params"]["agent"]
+        cache_dir=MODEL_DATA["hf_params"]["cache_dir"],
+        **MODEL_DATA["params"]["agent"]
     )
     
     return MODEL_DATA

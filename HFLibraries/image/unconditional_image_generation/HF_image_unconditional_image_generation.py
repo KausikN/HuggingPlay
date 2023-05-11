@@ -54,7 +54,7 @@ def UI_Func_LoadInputs(**params):
     ## Prompt
     cols = st.columns((1, 4))
     if cols[0].checkbox("Prompt"):
-        USERINPUT_Inputs["prompt"] = cols[1].text_input("Prompt", value="A beautiful landscape.")
+        USERINPUT_Inputs["prompt"] = cols[1].text_input("Prompt", value="A beautiful landscape.").strip()
     ## N Inference Steps and Strength and N Images
     cols = st.columns(3)
     USERINPUT_Inputs["num_inference_steps"] = cols[0].number_input("N Inference Steps", min_value=1, value=50, step=1)
@@ -67,7 +67,7 @@ def UI_Func_LoadInputs(**params):
     ## Negative Prompt and Guidance Scale
     cols = st.columns((1, 4))
     if cols[0].checkbox("Negative Prompt"):
-        USERINPUT_Inputs["negative_prompt"] = cols[1].text_area("Enter Negative Prompt").strip()
+        USERINPUT_Inputs["negative_prompt"] = cols[1].text_area("Enter Negative Prompt", value="blurry").strip()
         USERINPUT_Inputs["guidance_scale"] = st.number_input("Guidance Scale", min_value=0.0, value=8.0, step=0.1)
 
     return USERINPUT_Inputs
@@ -97,24 +97,26 @@ def HF_Func_LoadModel(model_info, **params):
     HF_ID = model_info["hf_id"]
     MODEL_DATA = {
         "hf_id": HF_ID,
-        "hf_data": model_info["data"],
-        "hf_params": {},
-        "pipe": None
+        "hf_params": {
+            "cache_dir": HF_CACHE_PATHS["default"]
+        },
+        "params": {
+            "model": {
+                "variant": "memory efficient attention"
+            }
+        },
+        "pipeline": None
     }
     # Load Params
-    if "params" in model_info["data"].keys():
-        for k in MODEL_DATA["hf_params"].keys():
-            if k in model_info["data"]["params"].keys():
-                for pk in model_info["data"]["params"][k].keys():
-                    MODEL_DATA["hf_params"][k][pk] = model_info["data"]["params"][k][pk]
+    MODEL_DATA = safe_update_model_data_dict(MODEL_DATA, model_info)
     # Load Model
-    MODEL_DATA["pipe"] = DiffusionPipeline.from_pretrained(
+    MODEL_DATA["pipeline"] = DiffusionPipeline.from_pretrained(
         HF_ID, 
-        # torch_dtype=torch.float16, 
-        **MODEL_DATA["hf_params"]
+        cache_dir=MODEL_DATA["hf_params"]["cache_dir"],
+        **MODEL_DATA["params"]["model"]
     )
     ## To Device
-    MODEL_DATA["pipe"] = MODEL_DATA["pipe"].to(DEVICE)
+    MODEL_DATA["pipeline"] = MODEL_DATA["pipeline"].to(DEVICE)
     
     return MODEL_DATA
 
@@ -123,9 +125,9 @@ def HF_Func_RunModel(MODEL_DATA, inputs, **params):
     HF - Run Model
     '''
     # Init
-    PIPE = MODEL_DATA["pipe"]
+    PIPELINE = MODEL_DATA["pipeline"]
     # Run Model
-    OUTPUT_DATA = PIPE(**inputs)
+    OUTPUT_DATA = PIPELINE(**inputs)
     # Extract Images
     Is = []
     try: Is = OUTPUT_DATA.images

@@ -44,25 +44,29 @@ def HF_Func_LoadModel(model_info):
     HF_ID = model_info["hf_id"]
     MODEL_DATA = {
         "hf_id": HF_ID,
-        "hf_data": model_info["data"],
         "hf_params": {
+            "cache_dir": HF_CACHE_PATHS["default"]
+        },
+        "params": {
             "processor": {
                 "return_tensors": "pt"
             },
-            
+            "model": {}
         },
         "processor": None,
         "model": None
     }
     # Load Params
-    if "params" in model_info["data"].keys():
-        for k in MODEL_DATA["hf_params"].keys():
-            if k in model_info["data"]["params"].keys():
-                for pk in model_info["data"]["params"][k].keys():
-                    MODEL_DATA["hf_params"][k][pk] = model_info["data"]["params"][k][pk]
+    MODEL_DATA = safe_update_model_data_dict(MODEL_DATA, model_info)
     # Load Model
-    MODEL_DATA["processor"] = GLPNFeatureExtractor.from_pretrained(HF_ID)
-    MODEL_DATA["model"] = GLPNForDepthEstimation.from_pretrained(HF_ID)
+    MODEL_DATA["processor"] = GLPNFeatureExtractor.from_pretrained(
+        HF_ID, 
+        cache_dir=MODEL_DATA["hf_params"]["cache_dir"]
+    )
+    MODEL_DATA["model"] = GLPNForDepthEstimation.from_pretrained(
+        HF_ID, 
+        cache_dir=MODEL_DATA["hf_params"]["cache_dir"]
+    )
     
     return MODEL_DATA
 

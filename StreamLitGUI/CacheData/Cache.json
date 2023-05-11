@@ -1,6 +1,8 @@
 {
     "settings": {
-        "interactive_display": true,
-        "hf_cache_path": ""
+        "interactive_display": true
+    },
+    "hf_settings": {
+        "hf_cache_path": "Data/_hf/cache/"
     }
 }

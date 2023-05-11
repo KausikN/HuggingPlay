@@ -23,7 +23,7 @@ def UI_Func_LoadInputs(**params):
     USERINPUT_Inputs = {}
     # Ask Inputs
     ## Prompt
-    USERINPUT_Inputs["prompt"] = st.text_input("Enter Prompt").strip()
+    USERINPUT_Inputs["prompt"] = st.text_input("Enter Prompt", value="Moon revolving around the earth.").strip()
     if USERINPUT_Inputs["prompt"] == "":
         st.error("Invalid Prompt.")
         st.stop()
@@ -60,25 +60,33 @@ def HF_Func_LoadModel(model_info, **params):
     '''
     # Init
     HF_ID = model_info["hf_id"]
-    HF_PARAMS = {} if "params" not in model_info["data"] else model_info["data"]["params"]
     HF_OUTPUTPARAMS = {
         "output_key": "images"
     } if "output_params" not in model_info["data"] else model_info["data"]["output_params"]
     MODEL_DATA = {
         "hf_id": HF_ID,
-        "hf_data": model_info["data"],
-        "hf_params": HF_PARAMS,
+        "hf_params": {
+            "cache_dir": HF_CACHE_PATHS["default"]
+        },
+        "params": {
+            "model": {
+                "torch_dtype": torch.float16,
+                "variant": "memory efficient attention"
+            }
+        },
         "hf_output_params": HF_OUTPUTPARAMS,
-        "pipe": None
+        "pipeline": None
     }
+    # Load Params
+    MODEL_DATA = safe_update_model_data_dict(MODEL_DATA, model_info)
     # Load Model
-    PIPE = TextToVideoZeroPipeline.from_pretrained(
+    PIPELINE = TextToVideoZeroPipeline.from_pretrained(
         HF_ID, 
-        torch_dtype=torch.float16,
-        **HF_PARAMS
+        cache_dir=MODEL_DATA["hf_params"]["cache_dir"],
+        **MODEL_DATA["params"]["model"]
     )
-    PIPE.enable_model_cpu_offload()
-    MODEL_DATA["pipe"] = PIPE
+    PIPELINE.enable_model_cpu_offload()
+    MODEL_DATA["pipeline"] = PIPELINE
     
     return MODEL_DATA
 
@@ -87,12 +95,12 @@ def HF_Func_RunModel(MODEL_DATA, inputs, **params):
     HF - Run Model
     '''
     # Init
-    PIPE = MODEL_DATA["pipe"]
+    PIPELINE = MODEL_DATA["pipeline"]
     OUTPUT_PARAMS = MODEL_DATA["hf_output_params"]
     # Fix Input Keys
     inputs["video_length"] = inputs.pop("num_frames")
     # Run Model
-    OUTPUTS_DATA = PIPE(**inputs)
+    OUTPUTS_DATA = PIPELINE(**inputs)
     FRAMES = OUTPUTS_DATA.__dict__[OUTPUT_PARAMS["output_key"]]
     FRAMES = [(f * 255).astype("uint8") for f in FRAMES]
     OUTPUTS = {

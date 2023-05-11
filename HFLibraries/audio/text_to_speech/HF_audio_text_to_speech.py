@@ -76,7 +76,9 @@ def UI_Func_LoadInputs(**params):
     }
     # Ask Inputs
     ## Prompt
-    USERINPUT_Inputs["processor"]["text"] = st.text_input("Enter Text").strip()
+    USERINPUT_Inputs["processor"]["text"] = st.text_area(
+        "Enter Text", value="Hello World."
+    ).strip()
     if USERINPUT_Inputs["processor"]["text"] == "":
         st.error("No text provided.")
         st.stop()
@@ -114,11 +116,14 @@ def HF_Func_LoadModel(model_info, **params):
     HF_ID = model_info["hf_id"]
     MODEL_DATA = {
         "hf_id": HF_ID,
-        "hf_data": model_info["data"],
         "hf_params": {
+            "cache_dir": HF_CACHE_PATHS["default"]
+        },
+        "params": {
             "processor": {
                 "return_tensors": "pt"
             },
+            "model": {},
             "speaker": {
                 "vocoder_id": "microsoft/speecht5_hifigan",
                 "dataset_id": "Matthijs/cmu-arctic-xvectors",
@@ -133,19 +138,24 @@ def HF_Func_LoadModel(model_info, **params):
         "voice_embeddings": None
     }
     # Load Params
-    if "params" in model_info["data"].keys():
-        for k in MODEL_DATA["hf_params"].keys():
-            if k in model_info["data"]["params"].keys():
-                for pk in model_info["data"]["params"][k].keys():
-                    MODEL_DATA["hf_params"][k][pk] = model_info["data"]["params"][k][pk]
+    MODEL_DATA = safe_update_model_data_dict(MODEL_DATA, model_info)
     # Load Model
-    MODEL_DATA["processor"] = SpeechT5Processor.from_pretrained(HF_ID)
-    MODEL_DATA["model"] = SpeechT5ForTextToSpeech.from_pretrained(HF_ID)
-    MODEL_DATA["vocoder"] = SpeechT5HifiGan.from_pretrained(MODEL_DATA["hf_params"]["speaker"]["vocoder_id"])
+    MODEL_DATA["processor"] = SpeechT5Processor.from_pretrained(
+        HF_ID, 
+        cache_dir=MODEL_DATA["hf_params"]["cache_dir"]
+    )
+    MODEL_DATA["model"] = SpeechT5ForTextToSpeech.from_pretrained(
+        HF_ID, 
+        cache_dir=MODEL_DATA["hf_params"]["cache_dir"]
+    )
+    MODEL_DATA["vocoder"] = SpeechT5HifiGan.from_pretrained(
+        MODEL_DATA["params"]["speaker"]["vocoder_id"], 
+        cache_dir=MODEL_DATA["hf_params"]["cache_dir"]
+    )
     #  Load xvector containing speaker's voice characteristics from a dataset
     voc_emb_dataset = load_dataset("Matthijs/cmu-arctic-xvectors", split="validation")
     MODEL_DATA["voice_embeddings"] = torch.tensor(
-        voc_emb_dataset[MODEL_DATA["hf_params"]["speaker"]["xvector_index"]][MODEL_DATA["hf_params"]["speaker"]["xvector_column"]]
+        voc_emb_dataset[MODEL_DATA["params"]["speaker"]["xvector_index"]][MODEL_DATA["params"]["speaker"]["xvector_column"]]
     ).unsqueeze(0)
     
     return MODEL_DATA
@@ -157,7 +167,7 @@ def HF_Func_RunModel(MODEL_DATA, inputs, **params):
     # Init
     MODEL = MODEL_DATA["model"]
     # Run Model
-    PROC_INPUTS = MODEL_DATA["processor"](text=inputs["processor"]["text"], **MODEL_DATA["hf_params"]["processor"])
+    PROC_INPUTS = MODEL_DATA["processor"](text=inputs["processor"]["text"], **MODEL_DATA["params"]["processor"])
     AUDIO_DATA = MODEL.generate_speech(PROC_INPUTS["input_ids"], MODEL_DATA["voice_embeddings"], vocoder=MODEL_DATA["vocoder"])
     AUDIO_DATA = AUDIO_DATA.numpy()
     OUTPUTS = {

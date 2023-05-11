@@ -95,6 +95,10 @@ def UI_LoadModel(TASK_DATA):
             json.dumps(DefaultParams, indent=8),
             height=300
         ))
+    ## Set HF Cache Path
+    USERINPUT_ModelInfo["data"]["hf_params"] = {
+        "cache_dir": CACHE["hf_settings"]["hf_cache_path"]
+    }
 
     return USERINPUT_ModelInfo
 
@@ -212,29 +216,38 @@ def settings():
     SETTINGS = CACHE["settings"] if "settings" in CACHE.keys() else {
         "interactive_display": True
     }
+    HF_SETTINGS = CACHE["hf_settings"] if "hf_settings" in CACHE.keys() else {
+        "hf_cache_path": "Data/_hf/cache/"
+    }
     ## Plots Settings
     st.markdown("## Plots Settings")
     ### Interactive Plots
     SETTINGS["interactive_display"] = st.checkbox("Interactive Display", value=SETTINGS["interactive_display"])
-    ### HF Cache Path
-    st.markdown("## HF Cache Settings")
-    cols = st.columns(2)
-    USERINPUT_HFCacheInputType = cols[0].selectbox("HF Cache Input Type", ["Custom", "Default", "Local"])
-    if USERINPUT_HFCacheInputType == "Custom":
-        SETTINGS["hf_cache_path"] = cols[1].text_input("Enter HF Cache Path", value=SETTINGS["hf_cache_path"])
-    else:
-        SETTINGS["hf_cache_path"] = HF_CACHE_PATHS[USERINPUT_HFCacheInputType.lower()]
-    # Save Inputs
+    # Save Settings
     if st.button("Save Settings"):
-        ## Set HF Cache Path
-        set_hf_cache_path(SETTINGS["hf_cache_path"])
-        ## Save
         CACHE["settings"] = SETTINGS
         SaveCache()
         st.success("Settings Saved.")
 
     ## Operations
     st.markdown("## Operations")
+    ### Set HF Cache Path
+    st.markdown("### HF Cache Settings")
+    st.markdown("Current HF Cache Path: ```" + HF_SETTINGS["hf_cache_path"])
+    cols = st.columns(2)
+    USERINPUT_HFCacheInputType = cols[0].selectbox("HF Cache Input Type", ["Custom", "Default", "Local"])
+    if USERINPUT_HFCacheInputType == "Custom":
+        HF_SETTINGS["hf_cache_path"] = cols[1].text_input("Enter HF Cache Path", value=HF_SETTINGS["hf_cache_path"])
+    else:
+        HF_SETTINGS["hf_cache_path"] = HF_CACHE_PATHS[USERINPUT_HFCacheInputType.lower()]
+    ### Save HF Settings
+    if st.button("Save HF Settings"):
+        ## Set HF Cache Path
+        set_hf_cache_path(HF_SETTINGS["hf_cache_path"])
+        ## Save
+        CACHE["hf_settings"] = HF_SETTINGS
+        SaveCache()
+        st.success("HF Settings Saved.")
     ### Clear HF Cache
     if st.button("Clear HF Cache"):
         os.system(f"rm -rf {HF_CACHE_PATHS['current']}")

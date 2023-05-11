@@ -5,7 +5,9 @@
         "damo-vilab/text-to-video-ms-1.7b": {
             "pipeline": "default",
             "params": {
-                "variant": "memory efficient attention"
+                "model": {
+                    "variant": "memory efficient attention"
+                }
             },
             "output_params": {
                 "output_key": "frames"
@@ -15,7 +17,9 @@
         "PAIR/text2video-zero-controlnet-canny-anime": {
             "pipeline": "Zero-Shot",
             "params": {
-                "variant": "memory efficient attention"
+                "model": {
+                    "variant": "memory efficient attention"
+                }
             },
             "output_params": {
                 "output_key": "images"
@@ -24,7 +28,9 @@
         "PAIR/text2video-zero-controlnet-canny-avatar": {
             "pipeline": "Zero-Shot",
             "params": {
-                "variant": "memory efficient attention"
+                "model": {
+                    "variant": "memory efficient attention"
+                }
             },
             "output_params": {
                 "output_key": "images"
@@ -33,7 +39,9 @@
         "PAIR/text2video-zero-controlnet-canny-gta5": {
             "pipeline": "Zero-Shot",
             "params": {
-                "variant": "memory efficient attention"
+                "model": {
+                    "variant": "memory efficient attention"
+                }
             },
             "output_params": {
                 "output_key": "images"
@@ -42,7 +50,9 @@
         "PAIR/text2video-zero-controlnet-canny-arcane": {
             "pipeline": "Zero-Shot",
             "params": {
-                "variant": "memory efficient attention"
+                "model": {
+                    "variant": "memory efficient attention"
+                }
             },
             "output_params": {
                 "output_key": "images"

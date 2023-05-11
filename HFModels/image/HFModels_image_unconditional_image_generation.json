@@ -5,13 +5,17 @@
         "CompVis/ldm-celebahq-256": {
             "pipeline": "default",
             "params": {
-                "variant": "memory efficient attention"
+                "model": {
+                    "variant": "memory efficient attention"
+                }
             }
         },
         "google/ncsnpp-celebahq-256": {
             "pipeline": "default",
             "params": {
-                "variant": "memory efficient attention"
+                "model": {
+                    "variant": "memory efficient attention"
+                }
             }
         },
 

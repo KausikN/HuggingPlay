@@ -36,7 +36,10 @@ def UI_Func_LoadInputs(**params):
     }
     # Ask Inputs
     ## Prompt
-    USERINPUT_Inputs["text"] = st.text_area("Enter Text", height=300).strip()
+    USERINPUT_Inputs["text"] = st.text_area(
+        "Enter Text", value="The movie was amazing.", 
+        height=300
+    ).strip()
     if USERINPUT_Inputs["text"] == "":
         st.error("Text is empty.")
         st.stop()
@@ -63,9 +66,13 @@ def HF_Func_LoadModel(model_info, **params):
     HF_ID = model_info["hf_id"]
     MODEL_DATA = {
         "hf_id": HF_ID,
-        "hf_data": model_info["data"],
         "hf_params": {
-            "tokenizer": {},
+            "cache_dir": HF_CACHE_PATHS["default"]
+        },
+        "params": {
+            "tokenizer": {
+                "return_tensors": "pt"
+            },
             "model": {}
         },
         "config": None,
@@ -73,15 +80,20 @@ def HF_Func_LoadModel(model_info, **params):
         "model": None,
     }
     # Load Params
-    if "params" in model_info["data"].keys():
-        for k in MODEL_DATA["hf_params"].keys():
-            if k in model_info["data"]["params"].keys():
-                for pk in model_info["data"]["params"][k].keys():
-                    MODEL_DATA["hf_params"][k][pk] = model_info["data"]["params"][k][pk]
+    MODEL_DATA = safe_update_model_data_dict(MODEL_DATA, model_info)
     # Load Model
-    MODEL_DATA["config"] = AutoConfig.from_pretrained(HF_ID)
-    MODEL_DATA["tokenizer"] = AutoTokenizer.from_pretrained(HF_ID)
-    MODEL_DATA["model"] = AutoModel.from_pretrained(HF_ID)
+    MODEL_DATA["config"] = AutoConfig.from_pretrained(
+        HF_ID, 
+        cache_dir=MODEL_DATA["hf_params"]["cache_dir"]
+    )
+    MODEL_DATA["tokenizer"] = AutoTokenizer.from_pretrained(
+        HF_ID, 
+        cache_dir=MODEL_DATA["hf_params"]["cache_dir"]
+    )
+    MODEL_DATA["model"] = AutoModel.from_pretrained(
+        HF_ID, 
+        cache_dir=MODEL_DATA["hf_params"]["cache_dir"]
+    )
     
     return MODEL_DATA
 
@@ -98,8 +110,8 @@ def HF_Func_RunModel(MODEL_DATA, inputs, **params):
         CLASSES = [MODEL_DATA["config"].id2label[k] for k in CLASS_KEYS]
     except: pass
     # Run Model
-    MODEL_INPUTS = TOKENIZER.batch_encode_plus([inputs["text"]], **MODEL_DATA["hf_params"]["tokenizer"])
-    OUTPUTS = MODEL(**MODEL_INPUTS, **MODEL_DATA["hf_params"]["model"])
+    MODEL_INPUTS = TOKENIZER.batch_encode_plus([inputs["text"]], **MODEL_DATA["params"]["tokenizer"])
+    OUTPUTS = MODEL(**MODEL_INPUTS)
     PROB_DIST = OUTPUTS.logits.cpu().detach().numpy()[0]
     CLASS_INDEX = np.argmax(PROB_DIST)
     CLASS = CLASSES[CLASS_INDEX] if CLASSES is not None else f"Class_{CLASS_INDEX}"

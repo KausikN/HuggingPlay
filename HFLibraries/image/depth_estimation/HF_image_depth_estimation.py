@@ -150,25 +150,29 @@ def HF_Func_LoadModel(model_info, **params):
     HF_ID = model_info["hf_id"]
     MODEL_DATA = {
         "hf_id": HF_ID,
-        "hf_data": model_info["data"],
         "hf_params": {
+            "cache_dir": HF_CACHE_PATHS["default"]
+        },
+        "params": {
             "processor": {
                 "return_tensors": "pt"
             },
-            
+            "model": {}
         },
         "processor": None,
         "model": None
     }
     # Load Params
-    if "params" in model_info["data"].keys():
-        for k in MODEL_DATA["hf_params"].keys():
-            if k in model_info["data"]["params"].keys():
-                for pk in model_info["data"]["params"][k].keys():
-                    MODEL_DATA["hf_params"][k][pk] = model_info["data"]["params"][k][pk]
+    MODEL_DATA = safe_update_model_data_dict(MODEL_DATA, model_info)
     # Load Model
-    MODEL_DATA["processor"] = DPTImageProcessor.from_pretrained(HF_ID)
-    MODEL_DATA["model"] = DPTForDepthEstimation.from_pretrained(HF_ID)
+    MODEL_DATA["processor"] = DPTImageProcessor.from_pretrained(
+        HF_ID, 
+        cache_dir=MODEL_DATA["hf_params"]["cache_dir"]
+    )
+    MODEL_DATA["model"] = DPTForDepthEstimation.from_pretrained(
+        HF_ID, 
+        cache_dir=MODEL_DATA["hf_params"]["cache_dir"]
+    )
     
     return MODEL_DATA
 
@@ -179,7 +183,10 @@ def HF_Func_RunModel(MODEL_DATA, inputs, **params):
     # Init
     MODEL = MODEL_DATA["model"]
     # Run Model
-    PROC_INPUTS = MODEL_DATA["processor"](images=inputs["processor"]["image"], **MODEL_DATA["hf_params"]["processor"])
+    PROC_INPUTS = MODEL_DATA["processor"](
+        images=inputs["processor"]["image"], 
+        **MODEL_DATA["params"]["processor"]
+    )
     with torch.no_grad():
         OUTPUT_DATA = MODEL(**PROC_INPUTS)
         OUTPUT_DATA = OUTPUT_DATA.predicted_depth

@@ -39,22 +39,21 @@ def HF_Func_LoadAgent(model_info, **params):
     OPENAI_TOKEN = model_info["token"]
     MODEL_DATA = {
         "token": OPENAI_TOKEN,
-        "hf_data": model_info["data"],
         "hf_params": {
+            "cache_dir": HF_CACHE_PATHS["default"]
+        },
+        "params": {
             "agent": {}
         },
         "agent": None
     }
     # Load Params
-    if "params" in model_info["data"].keys():
-        for k in MODEL_DATA["hf_params"].keys():
-            if k in model_info["data"]["params"].keys():
-                for pk in model_info["data"]["params"][k].keys():
-                    MODEL_DATA["hf_params"][k][pk] = model_info["data"]["params"][k][pk]
+    MODEL_DATA = safe_update_model_data_dict(MODEL_DATA, model_info)
     # Load Agent
     MODEL_DATA["agent"] = OpenAiAgent(
         model="text-davinci-003", api_key=OPENAI_TOKEN,
-        **MODEL_DATA["hf_params"]["agent"]
+        cache_dir=MODEL_DATA["hf_params"]["cache_dir"],
+        **MODEL_DATA["params"]["agent"]
     )
     
     return MODEL_DATA
