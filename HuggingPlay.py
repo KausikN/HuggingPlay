@@ -4,6 +4,10 @@ Set of tools for running and visualizing huggingface models for various tasks
 
 # Imports
 from Utils.Utils import *
+## Agent
+from HFAgents.agent import HF_agent_starcoder
+from HFAgents.agent import HF_agent_openassistant
+from HFAgents.agent import HF_agent_openai
 ## Text
 from HFLibraries.text.text_classification import HF_text_text_classification
 from HFLibraries.text.token_classification import HF_text_token_classification
@@ -112,3 +116,15 @@ TASKS = HuggingPlayUtils_LoadModelsInfo({
         }
     }
 })
+## Agent Vars
+AGENTS = {
+    "starcoder": {
+        "module": HF_agent_starcoder
+    },
+    "openassistant": {
+        "module": HF_agent_openassistant
+    },
+    "openai": {
+        "module": HF_agent_openai
+    }
+}
