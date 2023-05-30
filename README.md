@@ -14,3 +14,9 @@
     - Choose a project to load and click load and deploy.
     - Then go ahead and use the app! 😃
     - If you want to change to another app, simply click on View Other Projects in top left and choose any other project and load and deploy.
+
+# Notebooks
+ - Hugging Play
+   - [![Hugging Play](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1TOkwAqCZk38sjkce-EpAgp4ygS_APEkb?usp=share_link)
+ - Hugging Agent
+   - [![Hugging Agent](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1p-Dx1lFyDFwFNuTG-5RyKJWlNUMYtMhT?usp=share_link)
